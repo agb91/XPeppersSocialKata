@@ -19,6 +19,10 @@ public class Command {
 		this.sender = sender;
 		this.target = target;
 	}
+	
+	public Command(String sender) {
+		this.sender = sender;
+	}
 
 	public Command() {
 	}
