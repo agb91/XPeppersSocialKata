@@ -1,6 +1,7 @@
 */.classpath
 */.project
 .metadata/
+.recommenders/
 */.settings/
 RemoteSystemsTempFiles/
 */target/*
