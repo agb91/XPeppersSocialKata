@@ -14,6 +14,13 @@ public class Post implements Comparable<Post> {
 
 	@Autowired
 	TimeManager timeManager;
+	
+	public Post( String user, String text )
+	{
+		this.author = user;
+		this.text = text;
+		this.timestamp = new DateTime();
+	}
 
 	public String getAuthor() {
 		return author;
