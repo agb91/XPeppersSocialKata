@@ -52,7 +52,7 @@ public class RESTClient {
 		} catch (Exception e) {
 			System.err.println("problem with request to: " + url + "\n");
 		}
-		ans.toString();
+		System.out.println( ans.toString() );
 		return ans;
 
 	}
