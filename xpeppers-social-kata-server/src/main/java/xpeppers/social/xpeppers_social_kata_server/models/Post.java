@@ -18,6 +18,13 @@ public class Post{
 		this.timestamp = new DateTime();
 	}
 	
+	public Post( String user, String text, DateTime dt )
+	{
+		this.author = user;
+		this.text = text;
+		this.timestamp = dt;
+	}
+	
 	public String getAuthor() {
 		return author;
 	}

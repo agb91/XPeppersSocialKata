@@ -5,9 +5,11 @@ import org.joda.time.DateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,17 +27,11 @@ public class SocialNetworkService {
 	private Map<String, User> users = new HashMap<String, User>();
 
 	public Map<String, User> getUsers() {
-		return users;
+		return this.users;
 	}
 
 	public void setUsers(Map<String, User> users) {
 		this.users = users;
-	}
-
-	public void addUser(User toAdd) {
-		String key = toAdd.getName();
-		if (!users.containsKey(key))
-			users.put(key, toAdd);
 	}
 
 	public Optional<User> getUserByName(String name) {
@@ -52,14 +48,25 @@ public class SocialNetworkService {
 	}
 
 	// user follows followed
-	public void follow(String user, String followed) {
+	public boolean follow(String user, String followed) {
 
-		if (users.containsKey(user)) {
+		if (users.containsKey(user) && users.containsKey(followed)) {
 			User thisUser = users.get(user);
 			thisUser.addFollowed(followed);
 			users.put(user, thisUser);
+			return true;
+		} else {
+			return false;
 		}
 
+	}
+
+	public Set<String> getFollowedByUser(String user) {
+		if (users.containsKey(user)) {
+			return users.get(user).getFollowed();
+		} else {
+			return new HashSet<String>();
+		}
 	}
 
 	public List<Post> getFollowedPosts(String user) {
@@ -68,16 +75,18 @@ public class SocialNetworkService {
 
 		if (users.containsKey(user)) {
 
-			User thisUser = users.get(user);
-			thisUser.getFollowed().forEach(name -> followed.add(getUserByName(name).orElse(new User())));
+			getFollowedByUser(user).forEach(name -> followed.add(getUserByName(name).orElse(new User())));
 			followed.forEach(f -> posts.addAll(f.getPosts()));
 
 		}
 
-		Comparator<Post> postComparator = Comparator.comparing(
-		        Post::getTimestamp, (t1, t2) -> {
-		            return timeManager.compareDates(t1, t2);
-		        });
+		return sorter(posts);
+	}
+
+	public List<Post> sorter(List<Post> posts) {
+		Comparator<Post> postComparator = Comparator.comparing(Post::getTimestamp, (t1, t2) -> {
+			return timeManager.compareDates(t1, t2);
+		});
 
 		Collections.sort(posts, postComparator);
 		return posts;

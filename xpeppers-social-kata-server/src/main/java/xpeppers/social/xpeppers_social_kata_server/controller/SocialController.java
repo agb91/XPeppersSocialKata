@@ -1,6 +1,7 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import xpeppers.social.xpeppers_social_kata_server.models.Post;
@@ -41,8 +42,6 @@ public class SocialController {
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public String posting(@RequestBody Command command) {
 		PostCommand post = commandFactory.getPostCommand(command);
-		// System.out.println("message: " + post.getMessage());
-		// System.out.println("sender: " + post.getSender());
 		socialService.addUserIfNotExists(post.getSender());
 		socialService.addMessageToUser(post.getSender(), post.getMessage());
 		return "Post " + post.getMessage() + " added by " + post.getSender();
@@ -52,8 +51,6 @@ public class SocialController {
 	public String read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command command = new Command(sender, target);
 		ReadCommand read = commandFactory.getReadCommand(command);
-		// System.out.println("targetUser: " + read.getTargetUser());
-		// System.out.println("sender: " + read.getSender());
 		User user = socialService.getUserByName(read.getTargetUser()).orElse(new User());
 
 		List<Post> posts = user.getPosts();
@@ -64,20 +61,31 @@ public class SocialController {
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
 	public String follow(@RequestBody Command command) {
 		FollowCommand follow = commandFactory.getFollowCommand(command);
-		// System.out.println("targetUser: " + read.getTargetUser());
-		// System.out.println("sender: " + read.getSender());
-		socialService.follow(follow.getSender(), follow.getTargetUser());
-		return follow.getSender() + " now follows : " + follow.getTargetUser();
+		boolean done = socialService.follow(follow.getSender(), follow.getTargetUser());
+		if( done )
+		{
+			return follow.getSender() + " now follows : " + follow.getTargetUser();
+		}
+		else
+		{
+			return "inexistent user";
+		}
+		
+		
+
 	}
 
 	@RequestMapping(value = "/wall", method = RequestMethod.GET)
 	public String wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command command = new Command(sender, target);
 		WallCommand wall = commandFactory.getWallCommand(command);
-		// System.out.println("sender: " + wall.getSender());
 		List<Post> posts = socialService.getFollowedPosts(wall.getSender());
 
 		return printer.formatPostToString(posts);
+	}
+
+	public Map<String, User> getUsers() {
+		return socialService.getUsers();
 	}
 
 }
