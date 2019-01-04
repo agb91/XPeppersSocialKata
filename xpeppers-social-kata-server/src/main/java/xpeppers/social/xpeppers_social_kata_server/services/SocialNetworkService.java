@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class SocialNetworkService {
 	// user follows followed
 	public boolean follow(String user, String followed) {
 
-		if (users.containsKey(user) && users.containsKey(followed)) {
+		if (user != null && !user.trim().equalsIgnoreCase("") && followed != null
+				&& !followed.trim().equalsIgnoreCase("") && users.containsKey(user) && users.containsKey(followed)) {
 			User thisUser = users.get(user);
 			thisUser.addFollowed(followed);
 			users.put(user, thisUser);
@@ -62,7 +64,7 @@ public class SocialNetworkService {
 	}
 
 	public Set<String> getFollowedByUser(String user) {
-		if (users.containsKey(user)) {
+		if (user != null && !user.trim().equalsIgnoreCase("") && users.containsKey(user)) {
 			return users.get(user).getFollowed();
 		} else {
 			return new HashSet<String>();
@@ -73,7 +75,7 @@ public class SocialNetworkService {
 		List<User> followed = new ArrayList<User>();
 		List<Post> posts = new ArrayList<Post>();
 
-		if (users.containsKey(user)) {
+		if (user != null && !user.trim().equalsIgnoreCase("") && users.containsKey(user)) {
 
 			getFollowedByUser(user).forEach(name -> followed.add(getUserByName(name).orElse(new User())));
 			followed.forEach(f -> posts.addAll(f.getPosts()));
@@ -84,6 +86,10 @@ public class SocialNetworkService {
 	}
 
 	public List<Post> sorter(List<Post> posts) {
+		// filter some nulls just to be sure
+		posts = posts.stream()
+				.filter(p -> p != null && p.getTimestamp() != null && p.getAuthor() != null && p.getText() != null)
+				.collect(Collectors.toList());
 		Comparator<Post> postComparator = Comparator.comparing(Post::getTimestamp, (t1, t2) -> {
 			return timeManager.compareDates(t1, t2);
 		});
@@ -94,7 +100,7 @@ public class SocialNetworkService {
 
 	public void addUserIfNotExists(String name) {
 
-		if (!users.containsKey(name)) {
+		if (name != null && !name.trim().equalsIgnoreCase("") && !users.containsKey(name)) {
 			User toAdd = new User(name);
 			users.put(name, toAdd);
 		}

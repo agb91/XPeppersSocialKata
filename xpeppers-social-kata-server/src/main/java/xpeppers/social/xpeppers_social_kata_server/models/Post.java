@@ -22,7 +22,14 @@ public class Post{
 	{
 		this.author = user;
 		this.text = text;
-		this.timestamp = dt;
+		if( dt != null )
+		{
+			this.timestamp = dt;
+		}else
+		{
+			this.timestamp = new DateTime();
+		}
+		
 	}
 	
 	public String getAuthor() {

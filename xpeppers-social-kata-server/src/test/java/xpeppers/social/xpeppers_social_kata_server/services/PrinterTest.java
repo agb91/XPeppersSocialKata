@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.hamcrest.CoreMatchers;
 import org.joda.time.DateTime;
@@ -37,12 +38,16 @@ public class PrinterTest {
 	@Test
 	public void formatTest() {
 		Post post = new Post(user, text);
+		Post post2 = new Post(user, text, null);
 		DateTime postTime = post.getTimestamp();
+		DateTime postTime2 = post2.getTimestamp();
 		assertNotNull(postTime);
-		String formattedTime = timeManager.findTimeAgo(postTime);
+		assertNotNull(postTime2);
+		String formattedTime = timeManager.findTimeAgo(Optional.of(postTime));
 		String formatted = printer.format(post);
 		String expettedString = "> " + user + " - " + text + " (" + formattedTime + " ago) \n";
 		assertEquals(expettedString, formatted);
+		
 	}
 
 	@Test
@@ -51,14 +56,14 @@ public class PrinterTest {
 		posts.add(new Post(user, text));
 		posts.add(new Post(user, textAlt));
 		posts.add(new Post(user, textTer));
+		posts.add(null);
+		posts.add(new Post(null, null));
 
 		String formatted = printer.formatPostToString(posts);
 
 		assertThat(formatted, CoreMatchers.containsString(text));
 		assertThat(formatted, CoreMatchers.containsString(textAlt));
 		assertThat(formatted, CoreMatchers.containsString(textTer));
-		
-		
 
 	}
 

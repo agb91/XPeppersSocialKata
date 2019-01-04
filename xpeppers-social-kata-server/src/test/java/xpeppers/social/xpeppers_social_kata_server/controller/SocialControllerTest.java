@@ -31,7 +31,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties
 public class SocialControllerTest {
 
-
 	@Autowired
 	SocialController socialController;
 
@@ -53,9 +52,16 @@ public class SocialControllerTest {
 		postCommand.setSender(firstUser);
 		postCommand.setTarget(null);
 		result = socialController.posting(postCommand);
-		// write null as a post from my point is view is acceptable, I just wanna avoid
+		// write null as a post from my point is view is acceptable, I just
+		// wanna avoid
 		// nullpointers
 		assertEquals("Post null added by mario", result);
+
+		postCommand.setSender(null);
+		postCommand.setTarget(null);
+		result = socialController.posting(postCommand);
+		// just wanna avoid nullpointers
+		assertEquals("Post null added by null", result);
 
 	}
 
@@ -67,7 +73,6 @@ public class SocialControllerTest {
 		postCommand.setTarget(message);
 
 		String result = socialController.posting(postCommand);
-
 		result = socialController.read(firstUser, secondUser);
 		assertThat(result, CoreMatchers.containsString("luigi - ciao mondo"));
 
@@ -75,6 +80,9 @@ public class SocialControllerTest {
 		assertEquals("", result);
 
 		result = socialController.read(firstUser, null);
+		assertEquals("", result);
+
+		result = socialController.read(null, null);
 		assertEquals("", result);
 	}
 
@@ -93,13 +101,15 @@ public class SocialControllerTest {
 		Command followCommand = new Command();
 		followCommand.setSender(firstUser);
 		followCommand.setTarget(secondUser);
-
 		result = socialController.follow(followCommand);
 		assertEquals("mario now follows : luigi", result);
 
 		followCommand.setTarget(nonSenseUser);
 		result = socialController.follow(followCommand);
-
+		assertEquals("inexistent user", result);
+		
+		followCommand.setTarget(null);
+		result = socialController.follow(followCommand);
 		assertEquals("inexistent user", result);
 	}
 
@@ -122,15 +132,16 @@ public class SocialControllerTest {
 		Command followCommand = new Command();
 		followCommand.setSender(firstUser);
 		followCommand.setTarget(secondUser);
-
 		result = socialController.follow(followCommand);
-
 		result = socialController.wall(firstUser, secondUser);
 
 		assertThat(result, CoreMatchers.containsString("luigi"));
 		assertThat(result, CoreMatchers.containsString("mario"));
-
 		assertFalse(result.contains(thirdUser));
+		
+		
+		result = socialController.wall(null, null);
+		assertEquals("", result);
 
 	}
 

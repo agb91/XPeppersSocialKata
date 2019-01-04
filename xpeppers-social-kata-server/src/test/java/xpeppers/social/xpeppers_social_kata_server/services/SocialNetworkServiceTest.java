@@ -41,6 +41,7 @@ public class SocialNetworkServiceTest {
 	private String old = "a lot of time ago..";
 	private String message = "some hello world";
 
+	// in that case I prefer to have a clean social network for every test
 	@Before
 	public void clean() {
 		socialNetworkService.setUsers(new HashMap<String, User>());
@@ -53,15 +54,19 @@ public class SocialNetworkServiceTest {
 		DateTime middleTime = new DateTime(2015, 3, 26, 12, 0, 0, 0);
 		DateTime oldTime = new DateTime(2011, 3, 26, 12, 0, 0, 0);
 
+		// expect to filter null posts...
 		posts.add(new Post(user2, middle, middleTime));
 		posts.add(new Post(user1, old, oldTime));
 		posts.add(new Post(user1, nuovo, nowTime));
+		posts.add(new Post(user1, null, null));
 
 		posts = socialNetworkService.sorter(posts);
 
+		assertEquals(3, posts.size());
 		assertEquals(nuovo, posts.get(0).getText());
 		assertEquals(middle, posts.get(1).getText());
 		assertEquals(old, posts.get(2).getText());
+		
 	}
 
 	@Test
@@ -78,6 +83,30 @@ public class SocialNetworkServiceTest {
 		socialNetworkService.addUserIfNotExists(user2);
 		assertEquals(2, socialNetworkService.getUsers().size());
 
+		// I wanna real names..
+		socialNetworkService.addUserIfNotExists(null);
+		socialNetworkService.addUserIfNotExists("");
+		assertEquals(2, socialNetworkService.getUsers().size());
+
+	}
+
+	@Test
+	public void addMessageToUser() {
+
+		assertEquals(0, socialNetworkService.getUsers().size());
+		socialNetworkService.addUserIfNotExists(user1);
+		socialNetworkService.addUserIfNotExists(user2);
+		socialNetworkService.addMessageToUser(user1, message);
+		assertEquals(0, socialNetworkService.getUserByName(null).orElse(new User()).getPosts().size());
+		assertEquals(0, socialNetworkService.getUserByName("").orElse(new User()).getPosts().size());
+		assertEquals(1, socialNetworkService.getUserByName(user1).orElse(new User()).getPosts().size());
+		assertEquals(0, socialNetworkService.getUserByName(user2).orElse(new User()).getPosts().size());
+		socialNetworkService.addMessageToUser(user1, "");
+		socialNetworkService.addMessageToUser(user1, null);
+		socialNetworkService.addMessageToUser(user2, null);
+		assertEquals(3, socialNetworkService.getUserByName(user1).orElse(new User()).getPosts().size());
+		assertEquals(1, socialNetworkService.getUserByName(user2).orElse(new User()).getPosts().size());
+
 	}
 
 	@Test
@@ -90,6 +119,7 @@ public class SocialNetworkServiceTest {
 		assertEquals(1, socialNetworkService.getFollowedByUser(user1).size());
 		// this user doesn't exist..
 		assertEquals(0, socialNetworkService.getFollowedByUser(nonsenseUser).size());
+		assertEquals(0, socialNetworkService.getFollowedByUser(null).size());
 		socialNetworkService.follow(user1, user2);
 		assertEquals(2, socialNetworkService.getFollowedByUser(user1).size());
 		socialNetworkService.follow(user1, user2);
@@ -111,6 +141,8 @@ public class SocialNetworkServiceTest {
 		assertEquals(1, socialNetworkService.getFollowedPosts(user1).size());
 		socialNetworkService.follow(user1, user2);
 		assertEquals(2, socialNetworkService.getFollowedPosts(user1).size());
+		assertEquals(0, socialNetworkService.getFollowedPosts(null).size());
+		assertEquals(0, socialNetworkService.getFollowedPosts("").size());
 
 		socialNetworkService.follow(user1, user2);
 		socialNetworkService.follow(user2, user1);

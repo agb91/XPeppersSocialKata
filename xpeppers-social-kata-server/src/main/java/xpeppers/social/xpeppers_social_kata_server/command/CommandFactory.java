@@ -2,6 +2,8 @@ package xpeppers.social.xpeppers_social_kata_server.command;
 
 import org.springframework.stereotype.Service;
 
+
+//is this class useful? now not, it is not, if in a future the commands will be in some way specialized probably it would be 
 @Service
 public class CommandFactory {
 
@@ -39,7 +41,7 @@ public class CommandFactory {
 		WallCommand result = new WallCommand();
 
 		result.setSender(general.getSender());
-		result.setCommandType(CommandType.FOLLOW);
+		result.setCommandType(CommandType.WALL);
 
 		return result;
 	}

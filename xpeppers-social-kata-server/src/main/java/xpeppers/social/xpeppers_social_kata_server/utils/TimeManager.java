@@ -1,5 +1,6 @@
 package xpeppers.social.xpeppers_social_kata_server.utils;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
@@ -14,14 +15,12 @@ public class TimeManager {
 	/*
 	 * it finds how old is the timestamp in a convenient representation
 	 */
-	public String findTimeAgo(DateTime timestamp) {
+	public String findTimeAgo(Optional<DateTime> timestamp) {
 
+
+		
 		DateTime now = new DateTime(); //it initializes in current timestamp
-		Long millis = now.getMillis() - timestamp.getMillis();
-
-		if (millis < 0) {
-			throw new IllegalArgumentException("oldness must be greater than zero!");
-		}
+		Long millis = now.getMillis() - timestamp.orElse(new DateTime()).getMillis();
 
 		long days = TimeUnit.MILLISECONDS.toDays(millis);
 		millis -= TimeUnit.DAYS.toMillis(days);

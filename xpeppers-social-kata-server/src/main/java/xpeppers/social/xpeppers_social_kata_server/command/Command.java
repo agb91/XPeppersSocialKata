@@ -11,7 +11,6 @@ public class Command {
 
 	// every command has at least a sender
 	// adding to this can have a target (user or message)
-
 	protected String sender;
 	protected String target;
 
