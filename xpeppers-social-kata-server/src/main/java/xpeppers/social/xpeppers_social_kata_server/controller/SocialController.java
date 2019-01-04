@@ -29,7 +29,7 @@ public class SocialController {
 
 	@Autowired
 	SocialNetworkService socialService;
-	
+
 	@Autowired
 	Printer printer;
 
@@ -43,44 +43,41 @@ public class SocialController {
 		PostCommand post = commandFactory.getPostCommand(command);
 		// System.out.println("message: " + post.getMessage());
 		// System.out.println("sender: " + post.getSender());
-		socialService.addUserIfNotExists( post.getSender() );
+		socialService.addUserIfNotExists(post.getSender());
 		socialService.addMessageToUser(post.getSender(), post.getMessage());
-		return "OK";
+		return "Post " + post.getMessage() + " added by " + post.getSender();
 	}
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command command = new Command(sender, target);
 		ReadCommand read = commandFactory.getReadCommand(command);
-		System.out.println("targetUser: " + read.getTargetUser());
-		System.out.println("sender: " + read.getSender());
-		User user = socialService.getUserByName(read.getTargetUser()).orElse( new User() );
-		
-		
-		
+		// System.out.println("targetUser: " + read.getTargetUser());
+		// System.out.println("sender: " + read.getSender());
+		User user = socialService.getUserByName(read.getTargetUser()).orElse(new User());
+
 		List<Post> posts = user.getPosts();
-		
-		return printer.formatPostToString( posts );
+
+		return printer.formatPostToString(posts);
 	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
 	public String follow(@RequestBody Command command) {
 		FollowCommand follow = commandFactory.getFollowCommand(command);
-		//System.out.println("targetUser: " + read.getTargetUser());
-		//System.out.println("sender: " + read.getSender());
-		socialService.follow( follow.getSender(), follow.getTargetUser() );
-		return "OK";
+		// System.out.println("targetUser: " + read.getTargetUser());
+		// System.out.println("sender: " + read.getSender());
+		socialService.follow(follow.getSender(), follow.getTargetUser());
+		return follow.getSender() + " now follows : " + follow.getTargetUser();
 	}
 
 	@RequestMapping(value = "/wall", method = RequestMethod.GET)
 	public String wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command command = new Command(sender, target);
 		WallCommand wall = commandFactory.getWallCommand(command);
-		//System.out.println("sender: " + wall.getSender());
-		List<Post> posts = socialService.getFollowedPosts( wall.getSender() );
-		
-		
-		return printer.formatPostToString( posts );
+		// System.out.println("sender: " + wall.getSender());
+		List<Post> posts = socialService.getFollowedPosts(wall.getSender());
+
+		return printer.formatPostToString(posts);
 	}
 
 }

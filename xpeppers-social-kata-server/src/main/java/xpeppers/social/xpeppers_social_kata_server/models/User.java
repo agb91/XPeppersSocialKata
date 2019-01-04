@@ -13,8 +13,11 @@ public class User {
 
 	public User(String name) {
 		this.name = name;
+		//each real user follows at least himself
+		followed.add(this.name);
 	}
 
+	//just to avoid nullpointer
 	public User() {
 	}
 
@@ -39,6 +42,7 @@ public class User {
 	}
 
 	public List<Post> getPosts() {
+		
 		return posts;
 	}
 
