@@ -17,7 +17,7 @@ public class Answer {
 
 	@Override
 	public String toString() {
-		return "Answer{" + "text='" + text + '}';
+		return text;
 	}
 
 }

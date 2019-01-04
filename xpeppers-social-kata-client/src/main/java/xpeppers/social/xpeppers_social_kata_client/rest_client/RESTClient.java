@@ -28,8 +28,8 @@ public class RESTClient {
 	public Answer callServer(Command command, String action) {
 		Answer ans = new Answer();
 		String url = baseUrl + "/" + action;
-		System.out.println("calling url: " + url + " with sender: " + command.getSender() + " and target:  "
-				+ command.getTarget());
+		//System.out.println("calling url: " + url + " with sender: " + command.getSender() + " and target:  "
+		//		+ command.getTarget());
 		try {
 			String text = "";
 			if (action.equalsIgnoreCase("read") || action.equalsIgnoreCase("wall")) // get
