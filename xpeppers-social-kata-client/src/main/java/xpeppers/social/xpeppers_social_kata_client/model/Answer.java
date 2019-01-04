@@ -1,23 +1,47 @@
 package xpeppers.social.xpeppers_social_kata_client.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
+import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Answer {
 
-	private String text;
+	private String answerText;
 
-	public String getText() {
-		return text;
+	// these two variables are useful just for testing purpose
+	private String url;
+	private List<String> params = new ArrayList<String>();
+
+	public String getUrl() {
+		return url;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public List<String> getParams() {
+		return params;
+	}
+
+	public void setParams(List<String> params) {
+		this.params = params;
+	}
+	
+	public void addParams(String param) {
+		this.params.add(param);
+	}
+
+	public String getAnswerText() {
+		return answerText;
+	}
+
+	public void setAnswerText(String answerText) {
+		this.answerText = answerText;
 	}
 
 	@Override
 	public String toString() {
-		return text;
+		return answerText;
 	}
 
 }

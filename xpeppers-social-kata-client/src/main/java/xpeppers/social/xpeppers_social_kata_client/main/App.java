@@ -26,11 +26,7 @@ public class App {
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
 	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-	}
-
+	
 	@Bean
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
@@ -40,4 +36,10 @@ public class App {
 			
 		};
 	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
+	}
+
+	
 }

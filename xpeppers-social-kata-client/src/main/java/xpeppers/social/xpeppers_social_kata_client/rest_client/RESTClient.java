@@ -38,17 +38,21 @@ public class RESTClient {
 				UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
 				        .queryParam("sender", command.getSender() )
 				        .queryParam("target", command.getTarget() );
-				//System.out.println( "----------------uri: " + builder.toUriString() );
+				ans.setUrl( builder.toUriString() ); // just to improving testability
+				System.out.println( builder.toUriString() );
 				ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, String.class);
 				text = response.getBody();
 			} else // post
 			{
 				HttpEntity<Command> request = new HttpEntity<>(command);
+				ans.setUrl( url ); // just to improving testability
+				ans.addParams( request.getBody().getSender() );
+				ans.addParams( request.getBody().getTarget() );
 				ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
 				text = response.getBody();
 			}
 
-			ans.setText(text);
+			ans.setAnswerText(text);
 		} catch (Exception e) {
 			System.err.println("problem with request to: " + url + "\n");
 		}
