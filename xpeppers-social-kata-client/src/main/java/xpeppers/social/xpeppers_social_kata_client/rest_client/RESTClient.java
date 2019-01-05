@@ -90,4 +90,10 @@ public class RESTClient {
 		ans.setAnswerText(text);
 		return ans;
 	}
+
+	//just to clean test cases, don't use it!
+	public void killAll() {
+		String url = baseUrl + "/killAll";
+		restTemplate.exchange(url, HttpMethod.GET, null, String.class);
+	}
 }

@@ -33,7 +33,7 @@ public class RegularExpressionManagerTest {
 	private String wall = "wall$";
 
 	@Test
-	public void getCommand() {
+	public void getAllMatchesTest() {
 
 		List<String> matches = new ArrayList<String>();
 
@@ -52,22 +52,25 @@ public class RegularExpressionManagerTest {
 		matches = regExpService.getAllMatches("mario follows luigi", follows);
 		assertEquals(1, matches.size());
 
+	}
+
+	@Test
+	public void getCommandTest() {
 		Command result = regExpService.getCommand(sender, read);
 		assertEquals(CommandType.READ, result.getType());
 		assertEquals(sender, result.getSender());
 		assertEquals(read, result.getTarget());
-		
-		
+
 		result = regExpService.getCommand(sender, followCommand);
 		assertEquals(CommandType.FOLLOW, result.getType());
 		assertEquals(sender, result.getSender());
 		assertEquals(target, result.getTarget());
-		
+
 		result = regExpService.getCommand(sender, postCommand);
 		assertEquals(CommandType.POST, result.getType());
 		assertEquals(sender, result.getSender());
 		assertEquals(message, result.getTarget());
-		
+
 		result = regExpService.getCommand(sender, wallCommand);
 		assertEquals(CommandType.WALL, result.getType());
 		assertEquals(sender, result.getSender());

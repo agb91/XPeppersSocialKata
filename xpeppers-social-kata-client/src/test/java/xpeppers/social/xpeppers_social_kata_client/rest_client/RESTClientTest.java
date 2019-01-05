@@ -1,6 +1,9 @@
 package xpeppers.social.xpeppers_social_kata_client.rest_client;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.web.client.RestTemplate;
@@ -28,7 +31,7 @@ public class RESTClientTest {
 	private String target = "luigi";
 
 	@Test
-	public void getCommand() {
+	public void callServerTest() {
 
 		restClient.setRestTemplate(restTemplate);
 
@@ -39,7 +42,7 @@ public class RESTClientTest {
 		Command commandOnlySender = new Command();
 		commandOnlySender.setSender(sender);
 
-		// get
+		// read
 		Answer answer = restClient.callServer(command, "read");
 		assertEquals("http://localhost:8080/read?sender=mario&target=luigi", answer.getUrl());
 		assertEquals(0, answer.getParams().size());
@@ -55,10 +58,11 @@ public class RESTClientTest {
 		assertEquals(sender, answer.getParams().get(0));
 		assertEquals(target, answer.getParams().get(1));
 
+		// follow
 		answer = restClient.callServer(command, "follow");
 		assertEquals("http://localhost:8080/follow", answer.getUrl());
-		assertEquals(sender, answer.getParams().get(0) );
-		assertEquals(target, answer.getParams().get(1) );
+		assertEquals(sender, answer.getParams().get(0));
+		assertEquals(target, answer.getParams().get(1));
 
 	}
 

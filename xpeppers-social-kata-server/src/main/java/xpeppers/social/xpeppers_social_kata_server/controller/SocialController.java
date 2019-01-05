@@ -1,5 +1,6 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,12 @@ public class SocialController {
 	@RequestMapping("/")
 	public String index() {
 		return "social server works";
+	}
+	
+	//just for test use
+	@RequestMapping("/killAll")
+	public void killer() {
+		socialService.setUsers( new HashMap<String,User>() );
 	}
 
 	@RequestMapping(value = "/post", method = RequestMethod.POST)

@@ -34,7 +34,6 @@ public class UserClientTest {
 		Command command = service.getCommand(scanner, sender, "chi segui?", true);
 
 		assertEquals(sender, command.getSender());
-		assertEquals("aaa", "aaa");
 	}
 
 }
