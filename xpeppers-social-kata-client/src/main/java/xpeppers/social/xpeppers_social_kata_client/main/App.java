@@ -4,36 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
-
-import xpeppers.social.xpeppers_social_kata_client.rest_client.RESTClient;
 import xpeppers.social.xpeppers_social_kata_client.user_interaction.UserClient;
 
+/*
+ * The responsability of this class is just to initialize the client, and to call interactWithUser of userClient,
+ * that begins to ask commands to to user
+ */
 @SpringBootApplication
 @ComponentScan("xpeppers.social.xpeppers_social_kata_client")
 public class App {
 
 	@Autowired
-	private RESTClient restClient;
-	
-	@Autowired
 	private UserClient userClient;
 
 	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
-	
-	@Bean
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
-			restClient.setRestTemplate(restTemplate);
-			userClient.setRestClient(restClient);
 			userClient.interactWithUser();
-			
 		};
 	}
 
@@ -41,5 +31,4 @@ public class App {
 		SpringApplication.run(App.class, args);
 	}
 
-	
 }

@@ -1,6 +1,5 @@
 package xpeppers.social.xpeppers_social_kata_server.services;
 
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;

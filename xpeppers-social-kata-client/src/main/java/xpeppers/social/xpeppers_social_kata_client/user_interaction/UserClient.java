@@ -3,27 +3,25 @@ package xpeppers.social.xpeppers_social_kata_client.user_interaction;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import xpeppers.social.xpeppers_social_kata_client.rest_client.RESTClient;
 
-@Service
+@Component
 public class UserClient {
 
 	@Autowired
 	UserClientServices service;
 
+	@Autowired
+	private RESTClient restClient;
+
 	private String READ_MESSAGE = "Enter the user that you want to see: ";
-	private String POST_MESSAGE = "Enter the message that you want to post:";
+	private String POST_MESSAGE = "Enter the message that you want to post: ";
 	private String FOLLOW_MESSAGE = "Enter the user that you want to follow: ";
 	private String WALL_MESSAGE = "I'm goint to print the wall ";
 
-	private RESTClient restClient;
-
-	public void setRestClient(RESTClient restClient) {
-		this.restClient = restClient;
-	}
-
+	// until the user exits continue to ask him commands
 	public void interactWithUser() {
 		Scanner scanner = new Scanner(System.in);
 		String username = service.askName(scanner);
@@ -31,7 +29,6 @@ public class UserClient {
 		boolean again = true;
 		while (again) {
 			String commandName = service.askWhichCommand(scanner);
-			System.out.println("COMMAND: " + commandName);
 
 			switch (commandName.toLowerCase()) {
 			case "read":
@@ -50,8 +47,7 @@ public class UserClient {
 				again = false;
 				break;
 			default:
-				again = false;
-				;
+				System.out.println("inacceptable command");
 				break;
 			}
 		}

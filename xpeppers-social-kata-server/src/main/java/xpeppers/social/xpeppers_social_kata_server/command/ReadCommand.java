@@ -2,16 +2,7 @@ package xpeppers.social.xpeppers_social_kata_server.command;
 
 public class ReadCommand extends Command {
 
-	private String targetUser;
 	private CommandType commandType;
-
-	public String getTargetUser() {
-		return targetUser;
-	}
-
-	public void setTargetUser(String targetUser) {
-		this.targetUser = targetUser;
-	}
 
 	public ReadCommand(String sender, String target) {
 		super(sender, target);

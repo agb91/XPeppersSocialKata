@@ -34,6 +34,7 @@ public class SocialController {
 	@Autowired
 	Printer printer;
 
+	// just for debug use
 	@RequestMapping("/")
 	public String index() {
 		return "social server works";
@@ -42,7 +43,7 @@ public class SocialController {
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public String posting(@RequestBody Command command) {
 		PostCommand post = commandFactory.getPostCommand(command);
-		socialService.addUserIfNotExists(post.getSender());
+		socialService.addUserIfNotExistent(post.getSender());
 		socialService.addMessageToUser(post.getSender(), post.getMessage());
 		return "Post " + post.getMessage() + " added by " + post.getSender();
 	}
@@ -51,27 +52,21 @@ public class SocialController {
 	public String read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command command = new Command(sender, target);
 		ReadCommand read = commandFactory.getReadCommand(command);
-		User user = socialService.getUserByName(read.getTargetUser()).orElse(new User());
-
-		List<Post> posts = user.getPosts();
-
+		socialService.addUserIfNotExistent(read.getSender());
+		List<Post> posts = socialService.getReadPosts(read.getTarget());
 		return printer.formatPostToString(posts);
 	}
 
 	@RequestMapping(value = "/follow", method = RequestMethod.POST)
 	public String follow(@RequestBody Command command) {
 		FollowCommand follow = commandFactory.getFollowCommand(command);
-		boolean done = socialService.follow(follow.getSender(), follow.getTargetUser());
-		if( done )
-		{
-			return follow.getSender() + " now follows : " + follow.getTargetUser();
-		}
-		else
-		{
+		socialService.addUserIfNotExistent(follow.getSender());
+		boolean done = socialService.follow(follow.getSender(), follow.getTarget());
+		if (done) {
+			return follow.getSender() + " now follows : " + follow.getTarget();
+		} else {
 			return "inexistent user";
 		}
-		
-		
 
 	}
 
@@ -79,6 +74,7 @@ public class SocialController {
 	public String wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command command = new Command(sender, target);
 		WallCommand wall = commandFactory.getWallCommand(command);
+		socialService.addUserIfNotExistent(wall.getSender());
 		List<Post> posts = socialService.getFollowedPosts(wall.getSender());
 
 		return printer.formatPostToString(posts);

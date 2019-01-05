@@ -1,10 +1,6 @@
 package xpeppers.social.xpeppers_social_kata_client.rest_client;
 
 import static org.junit.Assert.assertEquals;
-
-import java.io.ByteArrayInputStream;
-import java.util.Scanner;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.web.client.RestTemplate;
@@ -15,19 +11,7 @@ import xpeppers.social.xpeppers_social_kata_client.model.Command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { RESTClient.class, RestTemplate.class })

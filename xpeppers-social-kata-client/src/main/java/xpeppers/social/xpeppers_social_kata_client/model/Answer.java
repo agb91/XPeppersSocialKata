@@ -3,6 +3,7 @@ package xpeppers.social.xpeppers_social_kata_client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+//I want a string back from servers
 public class Answer {
 
 	private String answerText;
@@ -26,7 +27,7 @@ public class Answer {
 	public void setParams(List<String> params) {
 		this.params = params;
 	}
-	
+
 	public void addParams(String param) {
 		this.params.add(param);
 	}
@@ -41,6 +42,9 @@ public class Answer {
 
 	@Override
 	public String toString() {
+		if (answerText == null) {
+			return "";
+		}
 		return answerText;
 	}
 

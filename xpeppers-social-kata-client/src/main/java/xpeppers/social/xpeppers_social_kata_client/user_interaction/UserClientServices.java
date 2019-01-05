@@ -20,7 +20,7 @@ public class UserClientServices {
 	public String askWhichCommand(Scanner scanner) {
 		System.out.println("What is yout command? you can insert: \nRead \nPost \nFollow \nWall \nQuit");
 		String command = scanner.nextLine();
-		//System.out.println( "inserted: " + command );
+		System.out.println( "you chose: " + command );
 		return command;
 	}
 

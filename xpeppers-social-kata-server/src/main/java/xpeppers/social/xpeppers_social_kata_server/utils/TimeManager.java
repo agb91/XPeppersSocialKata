@@ -2,24 +2,18 @@ package xpeppers.social.xpeppers_social_kata_server.utils;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
 import org.joda.time.DateTime;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TimeManager {
 
-
-	// thanks stack-overflow
 	/*
 	 * it finds how old is the timestamp in a convenient representation
 	 */
 	public String findTimeAgo(Optional<DateTime> timestamp) {
 
-
-		
-		DateTime now = new DateTime(); //it initializes in current timestamp
+		DateTime now = new DateTime(); // it initializes in current timestamp
 		Long millis = now.getMillis() - timestamp.orElse(new DateTime()).getMillis();
 
 		long days = TimeUnit.MILLISECONDS.toDays(millis);

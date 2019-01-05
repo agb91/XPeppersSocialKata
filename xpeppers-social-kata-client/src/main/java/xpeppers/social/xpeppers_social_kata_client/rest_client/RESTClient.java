@@ -1,5 +1,9 @@
 package xpeppers.social.xpeppers_social_kata_client.rest_client;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +17,17 @@ import xpeppers.social.xpeppers_social_kata_client.model.Command;
 @Component
 public class RESTClient {
 
+	@Autowired
 	private RestTemplate restTemplate;
 
-	private String baseUrl = "http://localhost:8080";
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
+
+	// take this info from application.properties
+	@Value("${localhost}")
+	private String baseUrl;
 
 	public RestTemplate getRestTemplate() {
 		return restTemplate;
@@ -25,40 +37,57 @@ public class RESTClient {
 		this.restTemplate = restTemplate;
 	}
 
+	// different for GET and POST
+	// FOLLOW is idempotent, so should it be PUT? Yes, but because of simplicity I prefer POST
 	public Answer callServer(Command command, String action) {
 		Answer ans = new Answer();
 		String url = baseUrl + "/" + action;
-		//System.out.println("calling url: " + url + " with sender: " + command.getSender() + " and target:  "
-		//		+ command.getTarget());
-		try {
-			String text = "";
-			if (action.equalsIgnoreCase("read") || action.equalsIgnoreCase("wall")) // get
-			{
+		if (action.equalsIgnoreCase("read") || action.equalsIgnoreCase("wall")) // get
+		{
+			ans = callGet(command, url);
 
-				UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-				        .queryParam("sender", command.getSender() )
-				        .queryParam("target", command.getTarget() );
-				ans.setUrl( builder.toUriString() ); // just to improving testability
-				System.out.println( builder.toUriString() );
-				ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null, String.class);
-				text = response.getBody();
-			} else // post
-			{
-				HttpEntity<Command> request = new HttpEntity<>(command);
-				ans.setUrl( url ); // just to improving testability
-				ans.addParams( request.getBody().getSender() );
-				ans.addParams( request.getBody().getTarget() );
-				ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
-				text = response.getBody();
-			}
-
-			ans.setAnswerText(text);
-		} catch (Exception e) {
-			System.err.println("problem with request to: " + url + "\n");
+		} else // post
+		{
+			ans = callPost(command, url);
 		}
-		System.out.println( ans.toString() );
+		System.out.println(ans.toString());
 		return ans;
 
 	}
 
+	private Answer callGet(Command command, String url) {
+		Answer ans = new Answer();
+		String text = "";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url).queryParam("sender", command.getSender())
+				.queryParam("target", command.getTarget());
+		ans.setUrl(builder.toUriString()); // just to improving testability
+		//System.out.println(builder.toUriString());
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null,
+					String.class);
+			text = response.getBody();
+		} catch (Exception e) {
+			System.err.println("problem with request to: " + url + "\n");
+		}
+		ans.setAnswerText(text);
+		return ans;
+	}
+
+	private Answer callPost(Command command, String url) {
+		Answer ans = new Answer();
+		String text = "";
+		HttpEntity<Command> request = new HttpEntity<>(command);
+		// just to improving testability
+		ans.setUrl(url);
+		ans.addParams(request.getBody().getSender());
+		ans.addParams(request.getBody().getTarget());
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+			text = response.getBody();
+		} catch (Exception e) {
+			System.err.println("problem with request to: " + url + "\n");
+		}
+		ans.setAnswerText(text);
+		return ans;
+	}
 }

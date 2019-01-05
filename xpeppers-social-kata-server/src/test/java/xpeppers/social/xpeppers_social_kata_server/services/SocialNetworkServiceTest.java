@@ -1,25 +1,17 @@
 package xpeppers.social.xpeppers_social_kata_server.services;
 
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-
-import org.hamcrest.CoreMatchers;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
 import xpeppers.social.xpeppers_social_kata_server.models.Post;
 import xpeppers.social.xpeppers_social_kata_server.models.User;
@@ -66,26 +58,26 @@ public class SocialNetworkServiceTest {
 		assertEquals(nuovo, posts.get(0).getText());
 		assertEquals(middle, posts.get(1).getText());
 		assertEquals(old, posts.get(2).getText());
-		
+
 	}
 
 	@Test
-	public void addUserIfNotExistsTest() {
+	public void addUserIfNotExistentTest() {
 
 		assertEquals(0, socialNetworkService.getUsers().size());
-		socialNetworkService.addUserIfNotExists(user1);
-		socialNetworkService.addUserIfNotExists(user1);
-		socialNetworkService.addUserIfNotExists(user1);
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user1);
 		assertEquals(1, socialNetworkService.getUsers().size());
 
-		socialNetworkService.addUserIfNotExists(user2);
-		socialNetworkService.addUserIfNotExists(user1);
-		socialNetworkService.addUserIfNotExists(user2);
+		socialNetworkService.addUserIfNotExistent(user2);
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user2);
 		assertEquals(2, socialNetworkService.getUsers().size());
 
 		// I wanna real names..
-		socialNetworkService.addUserIfNotExists(null);
-		socialNetworkService.addUserIfNotExists("");
+		socialNetworkService.addUserIfNotExistent(null);
+		socialNetworkService.addUserIfNotExistent("");
 		assertEquals(2, socialNetworkService.getUsers().size());
 
 	}
@@ -94,8 +86,8 @@ public class SocialNetworkServiceTest {
 	public void addMessageToUser() {
 
 		assertEquals(0, socialNetworkService.getUsers().size());
-		socialNetworkService.addUserIfNotExists(user1);
-		socialNetworkService.addUserIfNotExists(user2);
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user2);
 		socialNetworkService.addMessageToUser(user1, message);
 		assertEquals(0, socialNetworkService.getUserByName(null).orElse(new User()).getPosts().size());
 		assertEquals(0, socialNetworkService.getUserByName("").orElse(new User()).getPosts().size());
@@ -112,8 +104,8 @@ public class SocialNetworkServiceTest {
 	@Test
 	public void followTest() {
 
-		socialNetworkService.addUserIfNotExists(user1);
-		socialNetworkService.addUserIfNotExists(user2);
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user2);
 
 		// remember that everybody at least is a follower of himself
 		assertEquals(1, socialNetworkService.getFollowedByUser(user1).size());
@@ -132,8 +124,8 @@ public class SocialNetworkServiceTest {
 	@Test
 	public void getFollowedPosts() {
 
-		socialNetworkService.addUserIfNotExists(user1);
-		socialNetworkService.addUserIfNotExists(user2);
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user2);
 
 		socialNetworkService.addMessageToUser(user1, message);
 		socialNetworkService.addMessageToUser(user2, message);
@@ -148,6 +140,26 @@ public class SocialNetworkServiceTest {
 		socialNetworkService.follow(user2, user1);
 		assertEquals(2, socialNetworkService.getFollowedPosts(user1).size());
 		assertEquals(2, socialNetworkService.getFollowedPosts(user2).size());
+
+	}
+
+	@Test
+	public void getReadPosts() {
+
+		socialNetworkService.addUserIfNotExistent(user1);
+		socialNetworkService.addUserIfNotExistent(user2);
+
+		socialNetworkService.addMessageToUser(user1, message);
+		socialNetworkService.addMessageToUser(user2, message);
+
+		assertEquals(1, socialNetworkService.getReadPosts(user1).size());
+		assertEquals(0, socialNetworkService.getReadPosts(null).size());
+		assertEquals(0, socialNetworkService.getReadPosts("").size());
+
+		socialNetworkService.addMessageToUser(user2, message);
+
+		assertEquals(1, socialNetworkService.getReadPosts(user1).size());
+		assertEquals(2, socialNetworkService.getReadPosts(user2).size());
 
 	}
 

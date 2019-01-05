@@ -1,16 +1,11 @@
 package xpeppers.social.xpeppers_social_kata_client.user_interaction;
 
-import xpeppers.social.xpeppers_social_kata_client.main.App;
 import xpeppers.social.xpeppers_social_kata_client.model.Command;
 import xpeppers.social.xpeppers_social_kata_client.rest_client.RESTClient;
-
 import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
-
 import org.junit.Test;
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

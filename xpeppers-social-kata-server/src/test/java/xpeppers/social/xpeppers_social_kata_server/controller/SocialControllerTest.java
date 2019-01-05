@@ -1,19 +1,11 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-
-import java.net.URL;
-
 import org.hamcrest.CoreMatchers;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
@@ -21,8 +13,6 @@ import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
 import xpeppers.social.xpeppers_social_kata_server.services.Printer;
 import xpeppers.social.xpeppers_social_kata_server.services.SocialNetworkService;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
-
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @RunWith(SpringRunner.class)
@@ -68,6 +58,7 @@ public class SocialControllerTest {
 	@Test
 	public void readTest() {
 
+		//before you post, after you read
 		Command postCommand = new Command();
 		postCommand.setSender(secondUser);
 		postCommand.setTarget(message);

@@ -11,9 +11,18 @@ public class Command {
 
 	// every command has at least a type taken from an enum of
 	// acceptable types and a sender
-	// adding to this can have a target (user or message)
+	// adding to this can have a target (another user or message)
 	protected String sender;
 	protected String target;
+	protected CommandType type;
+
+	public CommandType getType() {
+		return type;
+	}
+
+	public void setType(CommandType type) {
+		this.type = type;
+	}
 
 	public String getSender() {
 		return sender;
