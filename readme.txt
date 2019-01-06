@@ -1,17 +1,20 @@
 Exercise for XPeppers
 
+Some overview:
+The application has one server, that is the brain of the social network, and some clients, one client for every user. So if we wanna Alice, Bob and Charlie we bootstrap the server, and we bootstrap 3 clients, one for Alice, one for Bob, one for Charlie. The first thing that the client does is to ask you who you are, from that moment, that client has an identity, and cannot change it.
+
 How to run the application:
 
-pull the github repository:
+Required Environment:
+I've installed java 1.8.0_171, I'm pretty sure that all java version >= 1.8 will be fine
+I'm using Maven 3.3.9 (probably it will work with other maven versions)
+
+clone the github repository:
 https://github.com/agb91/XPeppersSocialKata
 
 Here there are two project: 
 server side is in the folder xpeppers-social-kata-server
 client side is in the folder xpeppers-social-kata-client
-
-Required Environment:
-I've installed java 1.8.0_171, I'm pretty sure that all java version >= 1.8 will be fine
-I'm using Maven 3.3.9 (probably it will work with other maven versions)
 
 Let's begin bootstrapping the server:
 open a linux or windowns terminal, enter in the folder of the server xpeppers-social-kata-server. 
@@ -27,57 +30,31 @@ mvn spring-boot:run
 
 in general mvn clean package is needed just the first time in order to build the jar, after you can use only mvn spring-boot:run
 
+How to use the project:
+follow the indication that the client application gives to you (about inserting your name, the command that you can use etc)
 
-General Requirements:
+Comments about the project:
 
-Social Networking Kata
-----------------------
+Why Spring Boot? 
+Because it is an easy way to create a web based application and to release it. I've considered Python as an alternative but for a client-server based application I prefer Spring
 
-Implement a console-based social networking application (similar to Twitter) satisfying the scenarios below.
+Why did you use System.out.println and not a logging system?
+Because of simplicity, this is a very little project, I don't need formatted logs and different levels
 
-### Scenarios
+Why did you use both Optional and != null notation?
+I'm used to use both of them, in that case I've chosen each time the easiest one. In general when I work on a project i follow the guidelines of the project
 
-**Posting**: Alice can publish messages to a personal timeline
+Why didn't you use the observer pattern to notify the follower when the followed posts a new message?
+I've considered it, but I don't need to push notifications in that case, simply each user pulls them when he uses the "wall" command
 
-> \> Alice -> I love the weather today    
-> \> Bob -> Damn! We lost!     
-> \> Bob -> Good game though.    
+Is the test coverage complete?
+No it isn't. I've tried to be pragmatic, I've created some test cases just to check the main functionalities of the application at each refactor. In a production project I usually spend more time in tests than in the project.
 
-**Reading**: Bob can view Alice’s timeline
+Why Post is an object that belongs to User and is not an independent object?
+I've considered that in this scenario an user can post a message only on his dashboard and without a receiver, so a post can be related only to one user, the sender.
 
-> \> Alice    
-> \> I love the weather today (5 minutes ago)    
-> \> Bob    
-> \> Good game though. (1 minute ago)     
-> \> Damn! We lost! (2 minutes ago)    
+Why you used POST for the rest request of "follow" and not PUT
+Actually follow is idempotent and it is quite an "update" more than a "create" so it should be PUT but for the sake of simplicity I've preferred to use just GET and POST requests
 
-**Following**: Charlie can subscribe to Alice’s and Bob’s timelines, and view an aggregated list of all subscriptions
-
-> \> Charlie -> I'm in New York today! Anyone wants to have a coffee?     
-> \> Charlie follows Alice    
-> \> Charlie wall    
-> \> Charlie - I'm in New York today! Anyone wants to have a coffee? (2 seconds ago)    
-> \> Alice - I love the weather today (5 minutes ago)    
-
-> \> Charlie follows Bob    
-> \> Charlie wall    
-> \> Charlie - I'm in New York today! Anyone wants to have a coffee? (15 seconds ago)     
-> \> Bob - Good game though. (1 minute ago)     
-> \> Bob - Damn! We lost! (2 minutes ago)     
-> \> Alice - I love the weather today (5 minutes ago)    
-
-### General requirements 
-
-- Application must use the console for input and output; 
-- User submits commands to the application: 
-    - posting: \<user name> -> \<message> 
-    - reading: \<user name> 
-    - following: \<user name> follows \<another user> 
-    - wall: \<user name> wall 
-- Don't worry about handling any exceptions or invalid commands. Assume that the user will always type the correct commands. Just focus on the sunny day scenarios.
-- Use whatever language and frameworks you want. (provide instructions on how to run the application)
-- **NOTE:** "posting:", "reading:", "following:" and "wall:" are not part of the command. All commands start with the user name.
-
-**IMPORTANT:**  Implement the requirements focusing on **writing the best code** you can produce.
-
-**CODE SUBMISSION:** Add the code to your own Github account and send us the link.
+General Requirements of the project:
+see https://github.com/sandromancuso/social_networking_kata
