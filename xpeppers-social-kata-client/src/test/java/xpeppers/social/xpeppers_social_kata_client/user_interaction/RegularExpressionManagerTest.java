@@ -75,6 +75,8 @@ public class RegularExpressionManagerTest {
 		assertEquals(CommandType.WALL, result.getType());
 		assertEquals(sender, result.getSender());
 		assertEquals(sender, result.getTarget());
+		
+		
 
 	}
 

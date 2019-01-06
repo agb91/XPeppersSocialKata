@@ -1,7 +1,6 @@
 package xpeppers.social.xpeppers_social_kata_client.rest_client;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -25,10 +24,6 @@ public class RESTClient {
 		return builder.build();
 	}
 
-	// take this info from application.properties
-	@Value("${localhost}")
-	private String baseUrl;
-
 	public RestTemplate getRestTemplate() {
 		return restTemplate;
 	}
@@ -38,8 +33,9 @@ public class RESTClient {
 	}
 
 	// different for GET and POST
-	// FOLLOW is idempotent, so should it be PUT? Yes, but because of simplicity I prefer POST
-	public Answer callServer(Command command, String action) {
+	// FOLLOW is idempotent, so should it be PUT? Yes, but because of simplicity
+	// I prefer POST
+	public Answer callServer(Command command, String action, String baseUrl) {
 		Answer ans = new Answer();
 		String url = baseUrl + "/" + action;
 		if (action.equalsIgnoreCase("read") || action.equalsIgnoreCase("wall")) // get
@@ -61,7 +57,7 @@ public class RESTClient {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url).queryParam("sender", command.getSender())
 				.queryParam("target", command.getTarget());
 		ans.setUrl(builder.toUriString()); // just to improving testability
-		//System.out.println(builder.toUriString());
+		// System.out.println(builder.toUriString());
 		try {
 			ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, null,
 					String.class);
@@ -91,9 +87,4 @@ public class RESTClient {
 		return ans;
 	}
 
-	//just to clean test cases, don't use it!
-	public void killAll() {
-		String url = baseUrl + "/killAll";
-		restTemplate.exchange(url, HttpMethod.GET, null, String.class);
-	}
 }
