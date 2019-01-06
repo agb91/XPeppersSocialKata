@@ -13,18 +13,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
+import xpeppers.social.xpeppers_social_kata_server.controller.SocialController;
 import xpeppers.social.xpeppers_social_kata_server.models.Post;
 import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { Printer.class, SocialNetworkService.class, CommandFactory.class, TimeManager.class })
+@SpringBootTest(classes = { SocialController.class, Printer.class, SocialNetworkService.class, CommandFactory.class, TimeManager.class })
 @EnableConfigurationProperties
 public class SocialNetworkServiceTest {
 
 	@Autowired
 	SocialNetworkService socialNetworkService;
-
+	
+	@Autowired
+	SocialController socialController;
+	
 	private String user1 = "mario";
 	private String user2 = "luigi";
 	private String nonsenseUser = "blabla";
@@ -58,7 +62,7 @@ public class SocialNetworkServiceTest {
 		assertEquals(nuovo, posts.get(0).getText());
 		assertEquals(middle, posts.get(1).getText());
 		assertEquals(old, posts.get(2).getText());
-
+		socialController.killer();
 	}
 
 	@Test
@@ -79,7 +83,7 @@ public class SocialNetworkServiceTest {
 		socialNetworkService.addUserIfNotExistent(null);
 		socialNetworkService.addUserIfNotExistent("");
 		assertEquals(2, socialNetworkService.getUsers().size());
-
+		socialController.killer();
 	}
 
 	@Test
@@ -98,7 +102,7 @@ public class SocialNetworkServiceTest {
 		socialNetworkService.addMessageToUser(user2, null);
 		assertEquals(3, socialNetworkService.getUserByName(user1).orElse(new User()).getPosts().size());
 		assertEquals(1, socialNetworkService.getUserByName(user2).orElse(new User()).getPosts().size());
-
+		socialController.killer();
 	}
 
 	@Test
@@ -118,7 +122,7 @@ public class SocialNetworkServiceTest {
 		socialNetworkService.follow(user2, user1);
 		assertEquals(2, socialNetworkService.getFollowedByUser(user1).size());
 		assertEquals(2, socialNetworkService.getFollowedByUser(user2).size());
-
+		socialController.killer();
 	}
 
 	@Test
@@ -140,7 +144,7 @@ public class SocialNetworkServiceTest {
 		socialNetworkService.follow(user2, user1);
 		assertEquals(2, socialNetworkService.getFollowedPosts(user1).size());
 		assertEquals(2, socialNetworkService.getFollowedPosts(user2).size());
-
+		socialController.killer();
 	}
 
 	@Test
@@ -160,7 +164,7 @@ public class SocialNetworkServiceTest {
 
 		assertEquals(1, socialNetworkService.getReadPosts(user1).size());
 		assertEquals(2, socialNetworkService.getReadPosts(user2).size());
-
+		socialController.killer();
 	}
 
 }

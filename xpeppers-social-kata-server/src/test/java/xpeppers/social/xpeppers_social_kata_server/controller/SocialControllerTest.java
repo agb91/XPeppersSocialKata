@@ -52,6 +52,9 @@ public class SocialControllerTest {
 		result = socialController.posting(postCommand);
 		// just wanna avoid nullpointers
 		assertEquals("Post null added by null", result);
+		
+		//clean after the tests
+		socialController.killer();
 
 	}
 
@@ -75,6 +78,8 @@ public class SocialControllerTest {
 
 		result = socialController.read(null, null);
 		assertEquals("", result);
+		
+		socialController.killer();
 	}
 
 	@Test
@@ -102,6 +107,8 @@ public class SocialControllerTest {
 		followCommand.setTarget(null);
 		result = socialController.follow(followCommand);
 		assertEquals("inexistent user", result);
+		
+		socialController.killer();
 	}
 
 	@Test
@@ -133,6 +140,8 @@ public class SocialControllerTest {
 		
 		result = socialController.wall(null, null);
 		assertEquals("", result);
+		
+		socialController.killer();
 
 	}
 

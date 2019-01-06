@@ -1,5 +1,34 @@
 Exercise for XPeppers
 
+How to run the application:
+
+pull the github repository:
+https://github.com/agb91/XPeppersSocialKata
+
+Here there are two project: 
+server side is in the folder xpeppers-social-kata-server
+client side is in the folder xpeppers-social-kata-client
+
+Required Environment:
+I've installed java 1.8.0_171, I'm pretty sure that all java version >= 1.8 will be fine
+I'm using Maven 3.3.9 (probably it will work with other maven versions)
+
+Let's begin bootstrapping the server:
+open a linux or windowns terminal, enter in the folder of the server xpeppers-social-kata-server. 
+Enter the following 2 commands:
+mvn clean package
+mvn spring-boot:run
+
+Now we can run one or more client console (one for each user that we wanna use)
+enter in the folder xpeppers-social-kata-client
+Enter the following 2 commands:
+mvn clean package
+mvn spring-boot:run
+
+in general mvn clean package is needed just the first time in order to build the jar, after you can use only mvn spring-boot:run
+
+
+General Requirements:
 
 Social Networking Kata
 ----------------------
