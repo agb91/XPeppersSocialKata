@@ -1,5 +1,6 @@
 package xpeppers.social.xpeppers_social_kata_server.command;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 //is this class useful? now no, it is not, if in a future the commands will be in some way specialized 
@@ -7,42 +8,57 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommandFactory {
 
-	public PostCommand getPostCommand(Command general) {
-		PostCommand result = new PostCommand();
+	@Autowired
+	private Command command;
 
-		result.setSender(general.getSender());
-		result.setCommandType(CommandType.POST);
-		result.setMessage(general.getTarget());
+	public Command getCommand(CommandType type, String sender, String target) {
+		switch (type) {
+			case POST: {
+				setPostCommand(sender, target);
+				return command;
+			}
+			case READ: {
+				setReadCommand(sender, target);
+				return command;
+			}
+			case FOLLOW: {
+				setFollowCommand(sender, target);
+				return command;
+			}
+			case WALL: {
+				setWallCommand(sender);
+				return command;
+			}
+		}
 
-		return result;
+		return command;
+
 	}
 
-	public ReadCommand getReadCommand(Command general) {
-		ReadCommand result = new ReadCommand();
+	private void setPostCommand(String sender, String target) {
 
-		result.setSender(general.getSender());
-		result.setCommandType(CommandType.READ);
-		result.setTarget(general.getTarget());
-
-		return result;
+		command.setSender(sender);
+		command.setType(CommandType.POST);
+		command.setTarget(target);
 	}
 
-	public FollowCommand getFollowCommand(Command general) {
-		FollowCommand result = new FollowCommand();
+	private void setReadCommand(String sender, String target) {
+		command.setSender(sender);
+		command.setType(CommandType.READ);
+		command.setTarget(target);
 
-		result.setSender(general.getSender());
-		result.setCommandType(CommandType.FOLLOW);
-		result.setTarget(general.getTarget());
-
-		return result;
 	}
 
-	public WallCommand getWallCommand(Command general) {
-		WallCommand result = new WallCommand();
+	private void setFollowCommand(String sender, String target) {
+		command.setSender(sender);
+		command.setType(CommandType.FOLLOW);
+		command.setTarget(target);
 
-		result.setSender(general.getSender());
-		result.setCommandType(CommandType.WALL);
+	}
 
-		return result;
+	private void setWallCommand(String sender) {
+
+		command.setSender(sender);
+		command.setType(CommandType.WALL);
 	}
 }

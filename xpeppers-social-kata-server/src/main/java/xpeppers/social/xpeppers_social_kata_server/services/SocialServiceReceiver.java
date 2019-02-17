@@ -16,8 +16,11 @@ import xpeppers.social.xpeppers_social_kata_server.models.Post;
 import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 
+
+//the receiver of the social pattern
+
 @Service
-public class SocialNetworkService {
+public class SocialServiceReceiver {
 
 	@Autowired
 	TimeManager timeManager;

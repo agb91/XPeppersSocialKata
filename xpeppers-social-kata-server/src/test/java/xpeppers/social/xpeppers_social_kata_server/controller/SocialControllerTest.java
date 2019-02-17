@@ -1,6 +1,9 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
 import static org.junit.Assert.*;
+
+import java.util.HashMap;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,19 +13,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
+import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.services.Printer;
-import xpeppers.social.xpeppers_social_kata_server.services.SocialNetworkService;
+import xpeppers.social.xpeppers_social_kata_server.services.SocialServiceReceiver;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { SocialController.class, Printer.class, SocialNetworkService.class, CommandFactory.class,
+@SpringBootTest(classes = { SocialController.class, Printer.class, SocialServiceReceiver.class, SocialCommandInvoker.class, Command.class, CommandFactory.class,
 		TimeManager.class })
 @EnableConfigurationProperties
 public class SocialControllerTest {
 
 	@Autowired
 	SocialController socialController;
+	
+	@Autowired
+	SocialServiceReceiver receiver;
 
 	private String firstUser = "mario";
 	private String secondUser = "luigi";
@@ -54,7 +61,7 @@ public class SocialControllerTest {
 		assertEquals("Post null added by null", result);
 		
 		//clean after the tests
-		socialController.killer();
+		receiver.setUsers( new HashMap<String,User>() );
 
 	}
 
@@ -79,7 +86,7 @@ public class SocialControllerTest {
 		result = socialController.read(null, null);
 		assertEquals("", result);
 		
-		socialController.killer();
+		receiver.setUsers( new HashMap<String,User>() );
 	}
 
 	@Test
@@ -108,7 +115,7 @@ public class SocialControllerTest {
 		result = socialController.follow(followCommand);
 		assertEquals("inexistent user", result);
 		
-		socialController.killer();
+		receiver.setUsers( new HashMap<String,User>() );
 	}
 
 	@Test
@@ -141,7 +148,7 @@ public class SocialControllerTest {
 		result = socialController.wall(null, null);
 		assertEquals("", result);
 		
-		socialController.killer();
+		receiver.setUsers( new HashMap<String,User>() );
 
 	}
 
