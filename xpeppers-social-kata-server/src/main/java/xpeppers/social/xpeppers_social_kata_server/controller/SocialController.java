@@ -9,6 +9,7 @@ import xpeppers.social.xpeppers_social_kata_server.models.Post;
 import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.services.Printer;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +42,7 @@ public class SocialController {
 	 * new HashMap<String,User>() ); }
 	 */
 
+	@CrossOrigin
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public String posting(@RequestBody Command command) {
 		Command post = commandFactory.getCommand( 
@@ -49,8 +51,10 @@ public class SocialController {
 		return invoker.execute();
 	}
 
+	@CrossOrigin
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
+		
 		Command read = commandFactory.getCommand( 
 				CommandType.READ , sender, target);
 		invoker.setCommand(read);
