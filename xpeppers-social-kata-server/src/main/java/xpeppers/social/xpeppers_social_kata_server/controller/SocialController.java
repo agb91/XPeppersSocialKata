@@ -1,21 +1,15 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import xpeppers.social.xpeppers_social_kata_server.models.Post;
-import xpeppers.social.xpeppers_social_kata_server.models.User;
-import xpeppers.social.xpeppers_social_kata_server.services.Printer;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
@@ -46,40 +40,51 @@ public class SocialController {
 
 	@CrossOrigin
 	@PostMapping(value = "/message")
-	public String posting(@RequestBody Command command) {
+	@ResponseBody
+	public Response posting(@RequestBody Command command) {
+		Response res = new Response();
 		Command post = commandFactory.getCommand( 
 				CommandType.POST , command.getSender(), command.getTarget());
 		invoker.setCommand(post);
-		return invoker.execute();
+		res.setResponse(invoker.execute());
+		return res;
 	}
 
 	@CrossOrigin
 	@GetMapping(value = "/message")
-	public String read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
-		
+	@ResponseBody
+	public Response read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
+		Response res = new Response();
 		Command read = commandFactory.getCommand( 
 				CommandType.READ , sender, target);
 		invoker.setCommand(read);
-		return invoker.execute();
+		res.setResponse(invoker.execute());
+		return res;
 	}
 
 	@CrossOrigin
 	@PostMapping(value = "/relation")
-	public String follow(@RequestBody Command command) {
+	@ResponseBody
+	public Response follow(@RequestBody Command command) {
+		Response res = new Response();
 		Command follow = commandFactory.getCommand( 
 				CommandType.FOLLOW , command.getSender(), command.getTarget());
 		invoker.setCommand(follow);
-		return invoker.execute();
+		res.setResponse(invoker.execute());
+		return res;
 
 	}
 
 	@CrossOrigin
 	@GetMapping(value = "/user")
-	public String wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
+	@ResponseBody
+	public Response wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
+		Response res = new Response();
 		Command wall = commandFactory.getCommand( 
 				CommandType.WALL , sender, null);
 		invoker.setCommand(wall);
-		return invoker.execute();
+		res.setResponse(invoker.execute());
+		return res;
 	}
 
 }

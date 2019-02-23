@@ -43,12 +43,12 @@ public class SocialControllerTest {
 		postCommand.setSender(firstUser);
 		postCommand.setTarget(message);
 
-		String result = socialController.posting(postCommand);
+		String result = socialController.posting(postCommand).getResponse();
 		assertEquals("Post ciao mondo added by mario", result);
 
 		postCommand.setSender(firstUser);
 		postCommand.setTarget(null);
-		result = socialController.posting(postCommand);
+		result = socialController.posting(postCommand).getResponse();
 		// write null as a post from my point is view is acceptable, I just
 		// wanna avoid
 		// nullpointers
@@ -56,7 +56,7 @@ public class SocialControllerTest {
 
 		postCommand.setSender(null);
 		postCommand.setTarget(null);
-		result = socialController.posting(postCommand);
+		result = socialController.posting(postCommand).getResponse();
 		// just wanna avoid nullpointers
 		assertEquals("Post null added by null", result);
 		
@@ -73,17 +73,17 @@ public class SocialControllerTest {
 		postCommand.setSender(secondUser);
 		postCommand.setTarget(message);
 
-		String result = socialController.posting(postCommand);
-		result = socialController.read(firstUser, secondUser);
+		String result = socialController.posting(postCommand).getResponse();
+		result = socialController.read(firstUser, secondUser).getResponse();
 		assertThat(result, CoreMatchers.containsString("luigi - ciao mondo"));
 
-		result = socialController.read(firstUser, nonSenseUser);
+		result = socialController.read(firstUser, nonSenseUser).getResponse();
 		assertEquals("", result);
 
-		result = socialController.read(firstUser, null);
+		result = socialController.read(firstUser, null).getResponse();
 		assertEquals("", result);
 
-		result = socialController.read(null, null);
+		result = socialController.read(null, null).getResponse();
 		assertEquals("", result);
 		
 		receiver.setUsers( new HashMap<String,User>() );
@@ -95,24 +95,24 @@ public class SocialControllerTest {
 		Command postCommand = new Command();
 		postCommand.setSender(secondUser);
 		postCommand.setTarget(message);
-		String result = socialController.posting(postCommand);
+		String result = socialController.posting(postCommand).getResponse();
 
 		postCommand.setSender(firstUser);
 		postCommand.setTarget(message);
-		result = socialController.posting(postCommand);
+		result = socialController.posting(postCommand).getResponse();
 
 		Command followCommand = new Command();
 		followCommand.setSender(firstUser);
 		followCommand.setTarget(secondUser);
-		result = socialController.follow(followCommand);
+		result = socialController.follow(followCommand).getResponse();
 		assertEquals("mario now follows : luigi", result);
 
 		followCommand.setTarget(nonSenseUser);
-		result = socialController.follow(followCommand);
+		result = socialController.follow(followCommand).getResponse();
 		assertEquals("inexistent user", result);
 		
 		followCommand.setTarget(null);
-		result = socialController.follow(followCommand);
+		result = socialController.follow(followCommand).getResponse();
 		assertEquals("inexistent user", result);
 		
 		receiver.setUsers( new HashMap<String,User>() );
@@ -124,28 +124,28 @@ public class SocialControllerTest {
 		Command postCommand = new Command();
 		postCommand.setSender(firstUser);
 		postCommand.setTarget(message);
-		String result = socialController.posting(postCommand);
+		String result = socialController.posting(postCommand).getResponse();
 
 		postCommand.setSender(secondUser);
 		postCommand.setTarget(message);
-		result = socialController.posting(postCommand);
+		result = socialController.posting(postCommand).getResponse();
 
 		postCommand.setSender(thirdUser);
 		postCommand.setTarget(message);
-		result = socialController.posting(postCommand);
+		result = socialController.posting(postCommand).getResponse();
 
 		Command followCommand = new Command();
 		followCommand.setSender(firstUser);
 		followCommand.setTarget(secondUser);
-		result = socialController.follow(followCommand);
-		result = socialController.wall(firstUser, secondUser);
+		result = socialController.follow(followCommand).getResponse();
+		result = socialController.wall(firstUser, secondUser).getResponse();
 
 		assertThat(result, CoreMatchers.containsString("luigi"));
 		assertThat(result, CoreMatchers.containsString("mario"));
 		assertFalse(result.contains(thirdUser));
 		
 		
-		result = socialController.wall(null, null);
+		result = socialController.wall(null, null).getResponse();
 		assertEquals("", result);
 		
 		receiver.setUsers( new HashMap<String,User>() );

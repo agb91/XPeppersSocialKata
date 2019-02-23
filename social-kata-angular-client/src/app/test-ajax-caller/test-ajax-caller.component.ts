@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../ajax.service';
+import { Command } from '../command';
 
 @Component({
   selector: 'app-test-ajax-caller',
@@ -12,8 +13,16 @@ export class TestAjaxCallerComponent implements OnInit {
 
   title:string
 
+  
+
   ngOnInit() {
-    this.ajax.callRead().subscribe( t => this.title = t );
+    //this.ajax.callRead("mario", "luigi").subscribe( t => this.title = t );
+
+    let com: Command = new Command();
+    com.sender = "aaa"
+    com.target = "bbb"
+    this.ajax.callPost(com).subscribe( t => console.log("messageeeee---------" + t) ) 
+
   }
 
   
