@@ -13,7 +13,7 @@ export class TestAjaxCallerComponent implements OnInit {
   title:string
 
   ngOnInit() {
-    this.ajax.getRead().subscribe( t => this.title = t );
+    this.ajax.callRead().subscribe( t => this.title = t );
   }
 
   

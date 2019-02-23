@@ -10,6 +10,8 @@ import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.services.Printer;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +45,7 @@ public class SocialController {
 	 */
 
 	@CrossOrigin
-	@RequestMapping(value = "/post", method = RequestMethod.POST)
+	@PostMapping(value = "/message")
 	public String posting(@RequestBody Command command) {
 		Command post = commandFactory.getCommand( 
 				CommandType.POST , command.getSender(), command.getTarget());
@@ -52,7 +54,7 @@ public class SocialController {
 	}
 
 	@CrossOrigin
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	@GetMapping(value = "/message")
 	public String read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		
 		Command read = commandFactory.getCommand( 
@@ -61,7 +63,8 @@ public class SocialController {
 		return invoker.execute();
 	}
 
-	@RequestMapping(value = "/follow", method = RequestMethod.POST)
+	@CrossOrigin
+	@PostMapping(value = "/relation")
 	public String follow(@RequestBody Command command) {
 		Command follow = commandFactory.getCommand( 
 				CommandType.FOLLOW , command.getSender(), command.getTarget());
@@ -70,7 +73,8 @@ public class SocialController {
 
 	}
 
-	@RequestMapping(value = "/wall", method = RequestMethod.GET)
+	@CrossOrigin
+	@GetMapping(value = "/user")
 	public String wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Command wall = commandFactory.getCommand( 
 				CommandType.WALL , sender, null);

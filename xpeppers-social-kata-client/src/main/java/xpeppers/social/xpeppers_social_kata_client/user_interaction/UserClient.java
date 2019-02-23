@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import xpeppers.social.xpeppers_social_kata_client.model.CommandType;
 import xpeppers.social.xpeppers_social_kata_client.rest_client.RESTClient;
 
 @Component
@@ -38,16 +39,16 @@ public class UserClient {
 
 			switch (commandName.toLowerCase()) {
 			case "read":
-				restClient.callServer(service.getCommand(scanner, username, READ_MESSAGE, true), "read", baseUrl);
+				restClient.callServer(service.getCommand(scanner, username, CommandType.READ, READ_MESSAGE, true), "message", baseUrl);
 				break;
 			case "post":
-				restClient.callServer(service.getCommand(scanner, username, POST_MESSAGE, true), "post", baseUrl);
+				restClient.callServer(service.getCommand(scanner, username, CommandType.POST, POST_MESSAGE, true), "message", baseUrl);
 				break;
 			case "follow":
-				restClient.callServer(service.getCommand(scanner, username, FOLLOW_MESSAGE, true), "follow", baseUrl);
+				restClient.callServer(service.getCommand(scanner, username, CommandType.FOLLOW, FOLLOW_MESSAGE, true), "relation", baseUrl);
 				break;
 			case "wall":
-				restClient.callServer(service.getCommand(scanner, username, WALL_MESSAGE, false), "wall", baseUrl);
+				restClient.callServer(service.getCommand(scanner, username, CommandType.WALL, WALL_MESSAGE, false), "user", baseUrl);
 				break;
 			case "quit":
 				again = false;

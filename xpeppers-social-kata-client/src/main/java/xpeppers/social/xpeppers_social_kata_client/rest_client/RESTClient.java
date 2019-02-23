@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import xpeppers.social.xpeppers_social_kata_client.model.Answer;
 import xpeppers.social.xpeppers_social_kata_client.model.Command;
+import xpeppers.social.xpeppers_social_kata_client.model.CommandType;
 
 @Component
 public class RESTClient {
@@ -35,10 +36,10 @@ public class RESTClient {
 	// different for GET and POST
 	// FOLLOW is idempotent, so should it be PUT? Yes, but because of simplicity
 	// I prefer POST
-	public Answer callServer(Command command, String action, String baseUrl) {
+	public Answer callServer(Command command, String offsetUrl, String baseUrl) {
 		Answer ans = new Answer();
-		String url = baseUrl + "/" + action;
-		if (action.equalsIgnoreCase("read") || action.equalsIgnoreCase("wall")) // get
+		String url = baseUrl + "/" + offsetUrl;
+		if (command.getType().compareTo( CommandType.READ ) == 0 || command.getType().compareTo( CommandType.WALL ) == 0) // get
 		{
 			ans = callGet(command, url);
 

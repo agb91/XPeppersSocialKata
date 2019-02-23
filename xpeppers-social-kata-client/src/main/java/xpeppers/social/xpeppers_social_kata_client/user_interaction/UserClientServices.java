@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.springframework.stereotype.Service;
 
 import xpeppers.social.xpeppers_social_kata_client.model.Command;
+import xpeppers.social.xpeppers_social_kata_client.model.CommandType;
 
 @Service
 public class UserClientServices {
@@ -24,9 +25,10 @@ public class UserClientServices {
 		return command;
 	}
 
-	public Command getCommand(Scanner scanner, String username, String whatToAsk, boolean hasTarget) {
+	public Command getCommand(Scanner scanner, String username, CommandType type, String whatToAsk, boolean hasTarget) {
 		Command com = new Command();
 		com.setSender(username);
+		com.setType( type );
 		if( hasTarget )
 		{
 			System.out.println(whatToAsk);

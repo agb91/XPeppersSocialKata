@@ -11,12 +11,8 @@ export class AjaxService {
 
   private readUrlBase = 'http://localhost:8080/read/'
 
-  call():string
-  {
-    return "ok"
-  }
 
-  getRead(): Observable<string> {
+  callRead(): Observable<string> {
 
     let params = new HttpParams().set("sender","mario")
       .set("target", "luigi");
@@ -32,5 +28,7 @@ export class AjaxService {
 
     return result;
   }
+
+  
 
 }

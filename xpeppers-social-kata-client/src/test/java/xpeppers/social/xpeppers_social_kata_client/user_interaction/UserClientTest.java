@@ -1,6 +1,7 @@
 package xpeppers.social.xpeppers_social_kata_client.user_interaction;
 
 import xpeppers.social.xpeppers_social_kata_client.model.Command;
+import xpeppers.social.xpeppers_social_kata_client.model.CommandType;
 import xpeppers.social.xpeppers_social_kata_client.rest_client.RESTClient;
 import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
@@ -31,7 +32,7 @@ public class UserClientTest {
 		System.setIn(in);
 
 		Scanner scanner = new Scanner(System.in);
-		Command command = service.getCommand(scanner, sender, "chi segui?", true);
+		Command command = service.getCommand(scanner, sender, CommandType.FOLLOW, "chi segui?", true);
 
 		assertEquals(sender, command.getSender());
 	}
