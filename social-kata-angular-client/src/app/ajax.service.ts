@@ -29,9 +29,32 @@ export class AjaxService {
     return result;
   }
 
+  callWall( sender): Observable<string> {
+
+    let url = this.urlBase + this.user
+    let params = new HttpParams().set("sender",sender);
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+    
+    let result:Observable<string> = this.http.get<string>(url,
+         { headers: headers, params: params })
+
+    return result;
+  }
+
   callPost( command:Command ): Observable<string> {
 
     let url = this.urlBase + this.message
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+    
+    let result:Observable<string> = this.http.post<string>(url, command, 
+      {headers : headers})
+
+    return result;
+  }
+
+  callFollow( command:Command ): Observable<string> {
+
+    let url = this.urlBase + this.user
     let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
     
     let result:Observable<string> = this.http.post<string>(url, command, 

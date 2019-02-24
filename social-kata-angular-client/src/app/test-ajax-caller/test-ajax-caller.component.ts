@@ -12,17 +12,21 @@ export class TestAjaxCallerComponent implements OnInit {
   constructor(private ajax:AjaxService) { }
 
   title:string
-
+  sender:string
   
 
   ngOnInit() {
-    //this.ajax.callRead("mario", "luigi").subscribe( t => this.title = t );
+
+    this.sender = localStorage.getItem("name")
+    console.log("sender: " + this.sender)
+
+    this.ajax.callRead(this.sender, "luigi").subscribe( t => this.title = t );
 
     let com: Command = new Command();
-    com.sender = "aaa"
+    com.sender = this.sender
     com.target = "bbb"
     this.ajax.callPost(com).subscribe( t => console.log("messageeeee---------" + t) ) 
-
+    
   }
 
   
