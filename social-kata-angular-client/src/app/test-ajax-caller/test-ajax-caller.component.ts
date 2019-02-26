@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../ajax.service';
 import { Command } from '../command';
+import {Response} from '../response';
 
 @Component({
   selector: 'app-test-ajax-caller',
@@ -20,7 +21,7 @@ export class TestAjaxCallerComponent implements OnInit {
     this.sender = localStorage.getItem("name")
     console.log("sender: " + this.sender)
 
-    this.ajax.callRead(this.sender, "luigi").subscribe( t => this.title = t );
+    this.ajax.callRead(this.sender, "luigi").subscribe( t => this.title = t.response );
 
     let com: Command = new Command();
     com.sender = this.sender
@@ -30,5 +31,4 @@ export class TestAjaxCallerComponent implements OnInit {
   }
 
   
-
 }
