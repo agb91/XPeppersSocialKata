@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AjaxService } from '../ajax.service';
 
 @Component({
   selector: 'app-wall',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WallComponent implements OnInit {
 
-  constructor() { }
+  sender:string;
+  response:string;
+
+  constructor(private ajax:AjaxService) { }
 
   ngOnInit() {
+    this.sender = localStorage.getItem("name");
   }
+  
+  onSubmit()
+  {
+    console.log( "wall: " + this.sender + "--->");
+    this.ajax.callWall(this.sender, this.sender).subscribe( r => this.response = r.response );
 
+  }
 }

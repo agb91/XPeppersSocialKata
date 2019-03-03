@@ -10,6 +10,7 @@ export class ReadComponent implements OnInit {
 
   sender:string;
   target:string;
+  response:string;
 
   constructor(private ajax:AjaxService) { }
 
@@ -19,8 +20,8 @@ export class ReadComponent implements OnInit {
 
   onSubmit()
   {
-    console.log( this.sender + "--->" + this.target );
-    this.ajax.callRead(this.sender, this.target).subscribe( r => console.log( r.response) );
+    console.log( "read: " + this.sender + "--->" + this.target );
+    this.ajax.callRead(this.sender, this.target).subscribe( r => this.response = r.response );
 
   }
 

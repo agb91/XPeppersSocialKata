@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AjaxService } from '../ajax.service';
+import { Command } from '../command';
 
 @Component({
   selector: 'app-post',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostComponent implements OnInit {
 
-  constructor() { }
+  sender:string;
+  target:string;
+  response:string;
+
+
+  constructor(private ajax:AjaxService) { }
 
   ngOnInit() {
+    this.sender = localStorage.getItem("name");
+  }
+
+  onSubmit()
+  {
+    console.log( "post: " + this.sender + "--->" + this.target );
+    let com:Command = new Command(this.sender, this.target);
+    this.ajax.callPost(com).subscribe( r => this.response = r.response );
+
   }
 
 }

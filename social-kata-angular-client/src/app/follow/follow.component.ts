@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AjaxService } from '../ajax.service';
+import { Command } from '../command';
 
 @Component({
   selector: 'app-follow',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FollowComponent implements OnInit {
 
-  constructor() { }
+  sender:string;
+  target:string;
+  response:string;
+
+  constructor(private ajax:AjaxService) { }
 
   ngOnInit() {
+    this.sender = localStorage.getItem("name");
+  }
+
+  onSubmit()
+  {
+    console.log( "follow: " + this.sender + "--->" + this.target );
+    let com:Command = new Command(this.sender, this.target);
+    this.ajax.callFollow(com).subscribe( r => this.response = r.response );
+
   }
 
 }

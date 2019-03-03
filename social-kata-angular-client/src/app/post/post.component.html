@@ -1,3 +1,15 @@
-<p>
-  post works!
-</p>
+<div class="wrapper">
+  <div id="formContent" class="blue formContent">
+
+    <!-- POST -->
+    <form > 
+      <input [(ngModel)]="target" name="target" placeholder="What do you want to write?">
+      <input type="submit" value="Confirm" (click)="onSubmit()">
+    </form>
+
+    <div>
+      {{response}}
+    </div>
+
+  </div>
+</div>

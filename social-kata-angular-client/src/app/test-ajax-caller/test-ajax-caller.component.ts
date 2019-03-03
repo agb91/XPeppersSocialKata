@@ -23,9 +23,7 @@ export class TestAjaxCallerComponent implements OnInit {
 
     this.ajax.callRead(this.sender, "luigi").subscribe( t => this.title = t.response );
 
-    let com: Command = new Command();
-    com.sender = this.sender
-    com.target = "bbb"
+    let com: Command = new Command(this.sender, "bbb");
     this.ajax.callPost(com).subscribe( t => console.log("messageeeee---------" + t) ) 
     
   }
