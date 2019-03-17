@@ -19,6 +19,14 @@ export class FollowComponent implements OnInit {
     this.sender = localStorage.getItem("name");
   }
 
+  //useless class just to test the testing system..
+  logger(sender:string, target:string) : string
+  {
+    let result:string = "follow: " + sender + " ---> " + target;
+    console.log(result);
+    return result; 
+  }
+
   onSubmit()
   {
     console.log( "follow: " + this.sender + "--->" + this.target );

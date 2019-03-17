@@ -12,6 +12,7 @@ import { PostComponent } from './post/post.component';
 import { WallComponent } from './wall/wall.component';
 import { FollowComponent } from './follow/follow.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,10 +25,12 @@ import { FollowComponent } from './follow/follow.component';
     FollowComponent
   ],
   imports: [
+    HttpClientModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    FormsModule
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

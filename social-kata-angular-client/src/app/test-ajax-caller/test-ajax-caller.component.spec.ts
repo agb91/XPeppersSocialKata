@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TestAjaxCallerComponent } from './test-ajax-caller.component';
+import { HttpClientModule,HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TestAjaxCallerComponent', () => {
   let component: TestAjaxCallerComponent;
@@ -8,7 +10,8 @@ describe('TestAjaxCallerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestAjaxCallerComponent ]
+      declarations: [ TestAjaxCallerComponent],
+      imports: [HttpClientTestingModule],
     })
     .compileComponents();
   }));
