@@ -8,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectorComponent implements OnInit {
 
+  name:string; 
+
   constructor() { }
 
   ngOnInit() {
+
+
+    this.name = localStorage.getItem('name');
+
+
+    //alert(this.name);
   }
 
   read()

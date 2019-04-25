@@ -21,7 +21,10 @@ export class ReadComponent implements OnInit {
   onSubmit()
   {
     console.log( "read: " + this.sender + "--->" + this.target );
-    this.ajax.callRead(this.sender, this.target).subscribe( r => this.response = r.response );
+    this.ajax.callRead(this.sender, this.target).subscribe( r => 
+      {this.response = r.response;
+      alert(this.response) 
+    });
 
   }
 
