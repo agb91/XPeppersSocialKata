@@ -11,6 +11,7 @@ import { ReadComponent } from './read/read.component';
 import { PostComponent } from './post/post.component';
 import { WallComponent } from './wall/wall.component';
 import { FollowComponent } from './follow/follow.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { FollowComponent } from './follow/follow.component';
     ReadComponent,
     PostComponent,
     WallComponent,
-    FollowComponent
+    FollowComponent,
+    HeaderComponent
   ],
   imports: [
     HttpClientModule,

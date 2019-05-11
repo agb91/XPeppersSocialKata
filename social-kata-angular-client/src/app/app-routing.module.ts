@@ -7,16 +7,17 @@ import { ReadComponent } from './read/read.component';
 import { PostComponent } from './post/post.component';
 import { WallComponent } from './wall/wall.component';
 import { FollowComponent } from './follow/follow.component';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'caller', component: TestAjaxCallerComponent },
-  { path: 'selector', component: SelectorComponent },
-  { path: 'read', component: ReadComponent },
-  { path: 'post', component: PostComponent },
-  { path: 'follow', component: FollowComponent },
-  { path: 'wall', component: WallComponent }
+  { path: 'caller', component: TestAjaxCallerComponent , canActivate: [AuthGuardService]},
+  { path: 'selector', component: SelectorComponent , canActivate: [AuthGuardService]},
+  { path: 'read', component: ReadComponent , canActivate: [AuthGuardService]},
+  { path: 'post', component: PostComponent , canActivate: [AuthGuardService]},
+  { path: 'follow', component: FollowComponent , canActivate: [AuthGuardService]},
+  { path: 'wall', component: WallComponent , canActivate: [AuthGuardService]}
   
 ];
 

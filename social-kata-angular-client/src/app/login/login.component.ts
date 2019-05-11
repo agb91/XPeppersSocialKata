@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { AuthenticationService } from '../authentication-service.service';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +11,26 @@ export class LoginComponent implements OnInit {
 
   name:string
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+    localStorage.clear;
   }
 
   onSubmit()
   {
     console.log(this.name);
     //alert(this.name);
-    localStorage.setItem('name', this.name);
+    if( this.authenticationService.login(this.name) )
+    {
+      //alert("so go to selector");
+      this.router.navigate(['/selector']);
+    }
+    else{
+      //alert("so back to login");
+      this.router.navigate(['/']);
+    }
   }
 
 }
