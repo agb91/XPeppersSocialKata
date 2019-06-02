@@ -1,5 +1,8 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,21 +19,39 @@ public class SocialAuthenticator {
 	AuthRepository auth;
 
 	public Boolean authenticate(UserLogin userInfo) {
-		
-		try
-		{
-			if (Optional.of(userInfo).orElse(new UserLogin()).getUser().equalsIgnoreCase("mario")
-					&& Optional.of(userInfo).orElse(new UserLogin()).getPassword().equalsIgnoreCase("mario")) {
+
+		try {
+			Iterable<UserLogin> acceptable = auth.findAll();
+			Map<String, String> userPass = mapper(acceptable);
+
+			String expectedPass = userPass.get(userInfo.getUser());
+
+			if (Optional.of(userInfo).orElse(new UserLogin()).getPassword().equalsIgnoreCase(expectedPass)) {
 				return true;
 			} else {
 				return false;
 			}
-		}catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 
+	}
+
+	private Map<String, String> mapper(Iterable<UserLogin> acceptable) {
+
+		Map<String, String> result = new HashMap<String, String>();
+
+		try {
+			for (UserLogin i : acceptable) {
+				result.put(i.getUser(), i.getPassword());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return result;
+		}
+
+		return result;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import xpeppers.social.xpeppers_social_kata_server.App;
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
 import xpeppers.social.xpeppers_social_kata_server.models.User;
@@ -21,9 +22,7 @@ import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { SocialController.class, SocialAuthenticator.class, Printer.class,
-		SocialServiceReceiver.class, SocialCommandInvoker.class, Command.class, CommandFactory.class, TimeManager.class,
-		UserLogin.class })
+@SpringBootTest(classes = { App.class })
 @EnableConfigurationProperties
 public class SocialControllerTest {
 

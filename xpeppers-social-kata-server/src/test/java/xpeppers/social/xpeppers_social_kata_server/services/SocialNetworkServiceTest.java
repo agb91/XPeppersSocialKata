@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import xpeppers.social.xpeppers_social_kata_server.App;
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
 import xpeppers.social.xpeppers_social_kata_server.controller.SocialAuthenticator;
@@ -23,8 +24,7 @@ import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { SocialCommandInvoker.class, SocialAuthenticator.class, SocialController.class,
-		Printer.class, SocialServiceReceiver.class, Command.class, CommandFactory.class, TimeManager.class })
+@SpringBootTest(classes = { App.class })
 @EnableConfigurationProperties
 public class SocialNetworkServiceTest {
 

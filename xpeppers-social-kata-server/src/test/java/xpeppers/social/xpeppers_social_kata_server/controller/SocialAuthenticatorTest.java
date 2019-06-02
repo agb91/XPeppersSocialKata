@@ -23,15 +23,21 @@ import xpeppers.social.xpeppers_social_kata_server.services.SocialServiceReceive
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { App.class  })
+@SpringBootTest(classes = { App.class })
 @EnableConfigurationProperties
 public class SocialAuthenticatorTest {
 
 	@Autowired
 	SocialAuthenticator socialAuthenticator;
 
+	@Autowired
+	AuthRepository auth;
+
 	@Test
 	public void authenticateTest() {
+
+		// fixtures..
+		auth.save(new UserLogin(1L, "mario", "mario"));
 
 		UserLogin userOK = new UserLogin(1L, "mario", "mario");
 		UserLogin userKO1 = new UserLogin(1L, "mario", "dasdasdas");

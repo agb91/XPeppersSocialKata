@@ -15,11 +15,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import xpeppers.social.xpeppers_social_kata_server.App;
 import xpeppers.social.xpeppers_social_kata_server.models.Post;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { Printer.class, TimeManager.class })
+@SpringBootTest(classes = { App.class })
 @EnableConfigurationProperties
 public class PrinterTest {
 
