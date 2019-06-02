@@ -1,11 +1,13 @@
-package xpeppers.social.xpeppers_social_kata_server.main;
+package xpeppers.social.xpeppers_social_kata_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan("xpeppers.social.xpeppers_social_kata_server")
+@EnableJpaRepositories
 public class App {
 
 	public static void main(String[] args) {

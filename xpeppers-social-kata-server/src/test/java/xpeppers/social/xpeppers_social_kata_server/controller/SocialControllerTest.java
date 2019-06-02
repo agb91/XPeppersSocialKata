@@ -14,20 +14,22 @@ import org.springframework.test.context.junit4.SpringRunner;
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
 import xpeppers.social.xpeppers_social_kata_server.models.User;
+import xpeppers.social.xpeppers_social_kata_server.repo.UserLogin;
 import xpeppers.social.xpeppers_social_kata_server.services.Printer;
 import xpeppers.social.xpeppers_social_kata_server.services.SocialServiceReceiver;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { SocialController.class, Printer.class, SocialServiceReceiver.class, SocialCommandInvoker.class, Command.class, CommandFactory.class,
-		TimeManager.class })
+@SpringBootTest(classes = { SocialController.class, SocialAuthenticator.class, Printer.class,
+		SocialServiceReceiver.class, SocialCommandInvoker.class, Command.class, CommandFactory.class, TimeManager.class,
+		UserLogin.class })
 @EnableConfigurationProperties
 public class SocialControllerTest {
 
 	@Autowired
 	SocialController socialController;
-	
+
 	@Autowired
 	SocialServiceReceiver receiver;
 
@@ -59,16 +61,16 @@ public class SocialControllerTest {
 		result = socialController.posting(postCommand).getResponse();
 		// just wanna avoid nullpointers
 		assertEquals("Post null added by null", result);
-		
-		//clean after the tests
-		receiver.setUsers( new HashMap<String,User>() );
+
+		// clean after the tests
+		receiver.setUsers(new HashMap<String, User>());
 
 	}
 
 	@Test
 	public void readTest() {
 
-		//before you post, after you read
+		// before you post, after you read
 		Command postCommand = new Command();
 		postCommand.setSender(secondUser);
 		postCommand.setTarget(message);
@@ -85,8 +87,8 @@ public class SocialControllerTest {
 
 		result = socialController.read(null, null).getResponse();
 		assertEquals("", result);
-		
-		receiver.setUsers( new HashMap<String,User>() );
+
+		receiver.setUsers(new HashMap<String, User>());
 	}
 
 	@Test
@@ -110,12 +112,12 @@ public class SocialControllerTest {
 		followCommand.setTarget(nonSenseUser);
 		result = socialController.follow(followCommand).getResponse();
 		assertEquals("inexistent user", result);
-		
+
 		followCommand.setTarget(null);
 		result = socialController.follow(followCommand).getResponse();
 		assertEquals("inexistent user", result);
-		
-		receiver.setUsers( new HashMap<String,User>() );
+
+		receiver.setUsers(new HashMap<String, User>());
 	}
 
 	@Test
@@ -143,12 +145,11 @@ public class SocialControllerTest {
 		assertThat(result, CoreMatchers.containsString("luigi"));
 		assertThat(result, CoreMatchers.containsString("mario"));
 		assertFalse(result.contains(thirdUser));
-		
-		
+
 		result = socialController.wall(null, null).getResponse();
 		assertEquals("", result);
-		
-		receiver.setUsers( new HashMap<String,User>() );
+
+		receiver.setUsers(new HashMap<String, User>());
 
 	}
 

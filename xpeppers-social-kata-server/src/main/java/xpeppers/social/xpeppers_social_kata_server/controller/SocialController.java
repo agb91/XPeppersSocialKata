@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import xpeppers.social.xpeppers_social_kata_server.command.Command;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandFactory;
 import xpeppers.social.xpeppers_social_kata_server.command.CommandType;
+import xpeppers.social.xpeppers_social_kata_server.repo.UserLogin;
 
 @RestController
 public class SocialController {
 
 	@Autowired
 	CommandFactory commandFactory;
+	
+	@Autowired
+	SocialAuthenticator auth;
 
 	@Autowired
 	SocialCommandInvoker invoker;
@@ -37,6 +41,23 @@ public class SocialController {
 	 * @RequestMapping("/killAll") public void killer() { socialService.setUsers(
 	 * new HashMap<String,User>() ); }
 	 */
+	
+	
+	@CrossOrigin
+	@PostMapping(value = "/authenticate")
+	@ResponseBody
+	public Response posting(@RequestBody UserLogin userInfo) {
+		Response res = new Response();
+		if( auth.authenticate(userInfo) )
+		{
+			res.setResponse("true");
+		}
+		else
+		{
+			res.setResponse("false");
+		}
+		return res;
+	}
 
 	@CrossOrigin
 	@PostMapping(value = "/message")
