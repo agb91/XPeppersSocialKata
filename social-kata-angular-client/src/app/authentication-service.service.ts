@@ -7,8 +7,11 @@ export class AuthenticationService{
 
   constructor() { }
 
-  login( name:string) : Boolean
+  login( name:string, password:string) : Boolean
   {
+
+    
+
     if( name === 'mario' )
     {
       //alert("auth is ok");

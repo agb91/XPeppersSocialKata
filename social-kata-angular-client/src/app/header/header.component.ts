@@ -7,7 +7,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  user:string = "some text on header";
+  proposition:string = "Spoiler: correct usernames are 'Mario' - with password 'Mario' or 'Luigi' with password 'Luigi'";
 
   constructor() { }
 

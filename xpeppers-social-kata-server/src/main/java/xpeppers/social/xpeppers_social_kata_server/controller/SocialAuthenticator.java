@@ -17,7 +17,7 @@ public class SocialAuthenticator {
 
 	@Autowired
 	AuthRepository auth;
-
+	
 	public Boolean authenticate(UserLogin userInfo) {
 
 		try {

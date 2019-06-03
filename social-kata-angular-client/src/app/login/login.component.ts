@@ -9,7 +9,8 @@ import { AuthenticationService } from '../authentication-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  name:string
+  name:string;
+  password:string;
 
   constructor(private router: Router,
     private authenticationService: AuthenticationService) { }
@@ -20,9 +21,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit()
   {
-    console.log(this.name);
+    console.log(this.name + " - " + this.password);
     //alert(this.name);
-    if( this.authenticationService.login(this.name) )
+    if( this.authenticationService.login(this.name, this.password) )
     {
       //alert("so go to selector");
       this.router.navigate(['/selector']);
