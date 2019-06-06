@@ -21,6 +21,11 @@ public class SocialAuthenticator {
 	public Boolean authenticate(UserLogin userInfo) {
 
 		try {
+			//just to test:
+			auth.save(new UserLogin(1L, "mario", "mario"));
+			auth.save(new UserLogin(2L, "luigi", "luigi"));
+			
+			
 			Iterable<UserLogin> acceptable = auth.findAll();
 			Map<String, String> userPass = mapper(acceptable);
 

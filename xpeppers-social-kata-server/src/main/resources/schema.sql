@@ -6,3 +6,5 @@ CREATE TABLE UserLogin (
 
 INSERT INTO UserLogin (id, user, password)
 VALUES (1, 'mario', 'mario');
+INSERT INTO UserLogin (id, user, password)
+VALUES (1, 'luigi', 'luigi');

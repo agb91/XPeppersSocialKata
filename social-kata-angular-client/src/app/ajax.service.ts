@@ -27,10 +27,10 @@ export class AjaxService {
 
     let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
     
-    let result:Observable<Response> = this.http.post<Response>(url, ul, 
+    return this.http.post<Response>(url, ul, 
       {headers : headers})
 
-    return result;
+
   }
 
   callRead( sender, target ): Observable<Response> {

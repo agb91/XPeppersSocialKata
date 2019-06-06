@@ -1,27 +1,17 @@
 import { Injectable } from '@angular/core';
+import { AjaxService } from './ajax.service';
+import {Response} from './response';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService{
 
-  constructor() { }
+  constructor(private ajax:AjaxService) { }
 
-  login( name:string, password:string) : Boolean
+  login( user:string, password:string) : Observable<Response>
   {
-
-    
-
-    if( name === 'mario' )
-    {
-      //alert("auth is ok");
-      localStorage.setItem("name",name);
-      return true;
-    }
-    else{
-      //alert("auth is KO");
-      localStorage.clear;
-      return false;
-    }
+    return this.ajax.callAuth(user, password);
   }
 }

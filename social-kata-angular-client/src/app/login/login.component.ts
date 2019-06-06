@@ -9,7 +9,7 @@ import { AuthenticationService } from '../authentication-service.service';
 })
 export class LoginComponent implements OnInit {
 
-  name:string;
+  user:string;
   password:string;
 
   constructor(private router: Router,
@@ -21,17 +21,23 @@ export class LoginComponent implements OnInit {
 
   onSubmit()
   {
-    console.log(this.name + " - " + this.password);
+    //console.log("login ts: " + this.user + " - " + this.password);
     //alert(this.name);
-    if( this.authenticationService.login(this.name, this.password) )
-    {
-      //alert("so go to selector");
-      this.router.navigate(['/selector']);
-    }
-    else{
-      //alert("so back to login");
-      this.router.navigate(['/']);
-    }
+
+    let loginIsOk = this.authenticationService.login(this.user, this.password).subscribe(r =>
+      {
+        if( r.response === "true" )
+        {
+          alert("so go to selector");
+          this.router.navigate(['/selector']);
+        }
+        else{
+          alert(r.response);
+          this.router.navigate(['/']);
+        }
+      })
+
+    
   }
 
 }
