@@ -7,7 +7,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  proposition:string = "Spoiler: correct usernames are 'Mario' - with password 'Mario' or 'Luigi' with password 'Luigi'";
+  proposition:string = "Social Kata SpringBoot-Angular experiment";
 
   constructor() { }
 

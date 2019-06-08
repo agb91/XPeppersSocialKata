@@ -40,10 +40,10 @@ export class ReadComponent implements OnInit {
   clean( arr:string[] ):string[]
   {
 
-    alert ( arr );
-      let result:string[] = arr.filter( e => e.trim().length > 0 );
+    //alert ( arr );
+   let result:string[] = arr.filter( e => e.trim().length > 0 );
 
-    alert(result);  
+    //alert(result);  
     return result;
   }
 

@@ -1,7 +1,35 @@
+<div class="center"><h4>{{tip}}</h4></div>
+<br>
+
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form>
+      <input [(ngModel)]="user" type="text" id="user" class="fadeIn second" name="user" placeholder="insert user">
+      <input [(ngModel)]="password" type="password" id="password" class="fadeIn third" name="password" placeholder="insert password">
+      <input type="submit" (click)="onSubmit()" class="fadeIn fourth" value="Log In">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" (click)="help()" href="#">Forgot Password?</a>
+    </div>
+
+  </div>
+</div>
+
+<!--
 <div class="wrapper">
   <div id="formContent" class="blue formContent">
 
-    <!-- Login Form -->
     <form > 
       <input [(ngModel)]="user" name="user" placeholder="Insert your name (user)">
       <input [(ngModel)]="password" type="password" name="password" placeholder="Insert a password">
@@ -9,4 +37,4 @@
     </form>
 
   </div>
-</div>
+</div>-->

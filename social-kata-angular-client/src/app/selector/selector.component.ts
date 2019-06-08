@@ -15,7 +15,7 @@ export class SelectorComponent implements OnInit {
   ngOnInit() {
 
 
-    this.name = localStorage.getItem('name');
+    this.name = localStorage.getItem('user');
 
 
     //alert(this.name);

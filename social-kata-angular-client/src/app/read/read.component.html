@@ -7,12 +7,19 @@
         <input type="submit" value="Confirm" (click)="onSubmit()">
       </form>
 
-      <div>
-          <ul>
+      <div class="container">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <ul>
               <li *ngFor="let res of resultArr">
                 <span class="badge"></span> {{res}}
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+          
       </div>
 
       <div>

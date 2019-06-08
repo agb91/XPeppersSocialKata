@@ -1,19 +1,26 @@
-<div class="wrapper">
-  <div id="formContent" class="blue formContent">
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6">
+    <div class="center">
+      <div id="formContent" class="blue formContent">
 
-    <!-- POST -->
-    <form > 
-      <input [(ngModel)]="target" name="target" placeholder="What do you want to write?">
-      <input type="submit" value="Confirm" (click)="onSubmit()">
-    </form>
+        <!-- POST -->
+        <form > 
+          <input class="insertText" [(ngModel)]="target" name="target" placeholder="What do you want to write?">
+          <br>
+          <input type="submit" value="Confirm" (click)="onSubmit()">
+        </form>
+        <br>
+        <div>
+          {{response}}
+        </div>
+        <br>
+        <div>
+          <button type="button" class="btn btn-primary" routerLink="/selector" >Back to Selector</button>
+        </div>
 
-    <div>
-      {{response}}
+      </div>
     </div>
-
-    <div>
-      <button type="button" class="btn btn-primary" routerLink="/selector" >Back to Selector</button>
-    </div>
-
   </div>
+  <div class="col-sm-3"></div>
 </div>

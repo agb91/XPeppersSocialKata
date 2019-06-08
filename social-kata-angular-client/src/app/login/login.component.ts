@@ -12,11 +12,18 @@ export class LoginComponent implements OnInit {
   user:string;
   password:string;
 
+  tip:string = "Spoiler: correct usernames are 'mario' - with password 'mario' or 'luigi' with password 'luigi'";
+
   constructor(private router: Router,
     private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     localStorage.clear;
+  }
+
+  help()
+  {
+    alert( this.tip );
   }
 
   onSubmit()
@@ -28,11 +35,13 @@ export class LoginComponent implements OnInit {
       {
         if( r.response === "true" )
         {
-          alert("so go to selector");
+          //alert("so go to selector");
+          localStorage.setItem("user", this.user);
           this.router.navigate(['/selector']);
+          
         }
         else{
-          alert(r.response);
+          alert("wrong user or password, retry");
           this.router.navigate(['/']);
         }
       })

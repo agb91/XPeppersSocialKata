@@ -17,7 +17,7 @@ export class PostComponent implements OnInit {
   constructor(private ajax:AjaxService) { }
 
   ngOnInit() {
-    this.sender = localStorage.getItem("name");
+    this.sender = localStorage.getItem("user");
   }
 
   onSubmit()
