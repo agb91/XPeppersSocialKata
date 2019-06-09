@@ -1,11 +1,13 @@
 package xpeppers.social.xpeppers_social_kata_server.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xpeppers.social.xpeppers_social_kata_server.models.Post;
+import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.utils.TimeManager;
 
 @Service
@@ -26,6 +28,12 @@ public class Printer {
 				.collect(Collectors.toList());
 		StringBuilder sb = new StringBuilder();
 		posts.stream().sequential().forEach(p -> sb.append(format(p)));
+		return sb.toString();
+	}
+
+	public String formatUsersToString(Map<String, User> users) {
+		StringBuilder sb = new StringBuilder();
+		users.keySet().stream().filter( u -> u != null && !u.trim().equalsIgnoreCase("null")).forEach( u -> sb.append(u + ", ") );
 		return sb.toString();
 	}
 

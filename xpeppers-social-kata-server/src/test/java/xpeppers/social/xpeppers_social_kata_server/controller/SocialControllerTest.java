@@ -3,6 +3,7 @@ package xpeppers.social.xpeppers_social_kata_server.controller;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
@@ -148,6 +149,35 @@ public class SocialControllerTest {
 		result = socialController.wall(null, null).getResponse();
 		assertEquals("", result);
 
+		receiver.setUsers(new HashMap<String, User>());
+
+	}
+
+	@Test
+	public void getAllUsersTest() {
+		
+		Map users = new HashMap<String, User>();
+		receiver.setUsers(users);
+		String result = socialController.getAllUsers().getResponse();
+		assertEquals("", result);
+
+		users.put("primo", new User());
+		receiver.setUsers(users);
+		result = socialController.getAllUsers().getResponse();
+		assertEquals("primo, ", result);
+		
+		users.put("secondo", null);
+		receiver.setUsers(users);
+		result = socialController.getAllUsers().getResponse();
+		assertEquals("primo, secondo, ", result);
+		
+		users.put(null, null);
+		receiver.setUsers(users);
+		result = socialController.getAllUsers().getResponse();
+		assertEquals("primo, secondo, ", result);
+
+		
+		// clean after the tests
 		receiver.setUsers(new HashMap<String, User>());
 
 	}

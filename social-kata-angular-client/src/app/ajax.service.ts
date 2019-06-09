@@ -16,6 +16,7 @@ export class AjaxService {
   private urlBase = 'http://localhost:8080/' //just for the moment.. we are in local
   private message = 'message'
   private user = 'user'
+  private allUsers = 'allUsers'
   private relation = 'relation'
   private auth = "authenticate"
 
@@ -32,6 +33,19 @@ export class AjaxService {
 
 
   }
+
+  callGetAllusers( ): Observable<Response> {
+
+    let url = this.urlBase + this.allUsers
+    let params = new HttpParams()
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+    
+    let result:Observable<Response> = this.http.get<Response>(url,
+         { headers: headers, params: params })
+
+    return result;
+  }
+
 
   callRead( sender, target ): Observable<Response> {
 

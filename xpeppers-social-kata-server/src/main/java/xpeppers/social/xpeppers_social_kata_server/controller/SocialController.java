@@ -107,5 +107,19 @@ public class SocialController {
 		res.setResponse(invoker.execute());
 		return res;
 	}
+	
+	@CrossOrigin
+	@GetMapping(value = "/allUsers")
+	@ResponseBody
+	public Response getAllUsers() {
+		Response res = new Response();
+		Command getAllUsers = commandFactory.getCommand( 
+				CommandType.GETALL, null, null);
+		invoker.setCommand(getAllUsers);
+		res.setResponse(invoker.execute());
+		return res;
+	}
+	
+	
 
 }

@@ -29,6 +29,11 @@ public class CommandFactory {
 				setWallCommand(sender);
 				return command;
 			}
+			case GETALL:
+			{
+				setGetAllCommand();
+				return command;
+			}
 		}
 
 		return command;
@@ -40,6 +45,10 @@ public class CommandFactory {
 		command.setSender(sender);
 		command.setType(CommandType.POST);
 		command.setTarget(target);
+	}
+	
+	private void setGetAllCommand() {
+		command.setType(CommandType.GETALL);
 	}
 
 	private void setReadCommand(String sender, String target) {

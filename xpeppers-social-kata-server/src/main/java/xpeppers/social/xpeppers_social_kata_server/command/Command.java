@@ -1,11 +1,13 @@
 package xpeppers.social.xpeppers_social_kata_server.command;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import xpeppers.social.xpeppers_social_kata_server.models.Post;
+import xpeppers.social.xpeppers_social_kata_server.models.User;
 import xpeppers.social.xpeppers_social_kata_server.services.Printer;
 import xpeppers.social.xpeppers_social_kata_server.services.SocialServiceReceiver;
 
@@ -60,6 +62,11 @@ public class Command {
 				List<Post> posts = receiver.getFollowedPosts(sender);
 	
 				return printer.formatPostToString(posts);
+			}
+			case GETALL: {
+				Map<String, User> users = receiver.getUsers();
+			
+				return printer.formatUsersToString(users);
 			}
 		}
 		
