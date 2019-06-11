@@ -14,17 +14,11 @@ export class ReadComponent implements OnInit {
   target: string;
   response: string;
   resultArr: string[] = [];
-  usersArr: string[] = [];
 
   constructor(private ajax: AjaxService) { }
 
   ngOnInit() {
-    this.ajax.callGetAllusers().subscribe(r => {
-      let receiverUsers = this.formatUsers(r.response);
-      receiverUsers.forEach(u => this.usersArr.push(u));
-    })
 
-    console.log(this.usersArr);
     this.sender = localStorage.getItem("name");
   }
 
@@ -36,26 +30,10 @@ export class ReadComponent implements OnInit {
 
   }
 
-  selected(user: string) {
-    this.target = user;
-  }
-
   formatPosts(str: string): string {
     let formatted: string = "";
     this.resultArr = this.clean(str.split(">"));
 
-    return formatted;
-  }
-
-  formatUsers(str: string): string[] {
-    let formatted: string[] = [];
-
-    str.split(",").forEach(s => {
-      s.trim();
-      s.replace(",", "");
-      if (s.trim().length > 0) { formatted.push(s.trim()); }
-
-    })
     return formatted;
   }
 
@@ -66,6 +44,11 @@ export class ReadComponent implements OnInit {
 
     //alert(result);  
     return result;
+  }
+
+  selected(user: string) {
+    console.log(user);
+    this.target = user;
   }
 
 }

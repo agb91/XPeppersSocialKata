@@ -12,6 +12,7 @@ import { PostComponent } from './post/post.component';
 import { WallComponent } from './wall/wall.component';
 import { FollowComponent } from './follow/follow.component';
 import { HeaderComponent } from './header/header.component';
+import { ShowUsersComponent } from './show-users/show-users.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { HeaderComponent } from './header/header.component';
     PostComponent,
     WallComponent,
     FollowComponent,
-    HeaderComponent
+    HeaderComponent,
+    ShowUsersComponent
   ],
   imports: [
     HttpClientModule,

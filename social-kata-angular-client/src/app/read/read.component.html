@@ -1,18 +1,7 @@
 <div class="wrapper">
   <div id="formContent" class="blue formContent">
 
-    <div class="container">
-      <h4>Existing users that you can select:</h4>
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <ul>
-            <li *ngFor="let user of usersArr">
-              <button mat-raised-button (click)="selected(user)"><span class="badge"></span> {{user}}</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <app-show-users (hereSelected)="selected($event)"></app-show-users>
 
 
     <!-- READ -->
