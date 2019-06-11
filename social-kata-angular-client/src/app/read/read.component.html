@@ -1,45 +1,45 @@
 <div class="wrapper">
-    <div id="formContent" class="blue formContent">
+  <div id="formContent" class="blue formContent">
 
-      <div class="container">
-        <h4>Existing users:</h4>
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <ul>
-                <li *ngFor="let user of usersArr">
-                  <span class="badge"></span> {{user}}
-                </li>
-              </ul>
-            </div>
-          </div>
-      </div>
-      
-  
-      <!-- READ -->
-      <form > 
-        <input [(ngModel)]="target" name="target" placeholder="Whose post do you want to read?">
-        <input type="submit" value="Confirm" (click)="onSubmit()">
-      </form>
-
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <ul>
-              <li *ngFor="let res of resultArr">
-                <span class="badge"></span> {{res}}
-              </li>
-            </ul>
-          </div>
+    <div class="container">
+      <h4>Existing users that you can select:</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <li *ngFor="let user of usersArr">
+              <button mat-raised-button (click)="selected(user)"><span class="badge"></span> {{user}}</button>
+            </li>
+          </ul>
         </div>
       </div>
-      <div>
-          
-      </div>
-
-      <div>
-        <button type="button" class="btn btn-primary" routerLink="/selector" >Back to Selector</button>
-      </div>
-  
-  
     </div>
+
+
+    <!-- READ -->
+    <form>
+      <input [(ngModel)]="target" name="target" placeholder="Whose post do you want to read?">
+      <input type="submit" value="Confirm" (click)="onSubmit()">
+    </form>
+
+    <div class="container">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul>
+            <li *ngFor="let res of resultArr">
+              <span class="badge"></span> {{res}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div>
+
+    </div>
+
+    <div>
+      <button type="button" class="btn btn-primary" routerLink="/selector">Back to Selector</button>
+    </div>
+
+
   </div>
+</div>

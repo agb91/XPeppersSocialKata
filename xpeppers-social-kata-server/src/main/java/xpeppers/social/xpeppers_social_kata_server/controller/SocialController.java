@@ -1,5 +1,6 @@
 package xpeppers.social.xpeppers_social_kata_server.controller;
 
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +23,7 @@ public class SocialController {
 
 	@Autowired
 	CommandFactory commandFactory;
-	
+
 	@Autowired
 	SocialAuthenticator auth;
 
@@ -41,19 +42,15 @@ public class SocialController {
 	 * @RequestMapping("/killAll") public void killer() { socialService.setUsers(
 	 * new HashMap<String,User>() ); }
 	 */
-	
-	
+
 	@CrossOrigin
 	@PostMapping(value = "/authenticate")
 	@ResponseBody
 	public Response posting(@RequestBody UserLogin userInfo) {
 		Response res = new Response();
-		if( auth.authenticate(userInfo) )
-		{
+		if (auth.authenticate(userInfo)) {
 			res.setResponse("true");
-		}
-		else
-		{
+		} else {
 			res.setResponse("false");
 		}
 		return res;
@@ -64,8 +61,7 @@ public class SocialController {
 	@ResponseBody
 	public Response posting(@RequestBody Command command) {
 		Response res = new Response();
-		Command post = commandFactory.getCommand( 
-				CommandType.POST , command.getSender(), command.getTarget());
+		Command post = commandFactory.getCommand(CommandType.POST, command.getSender(), command.getTarget());
 		invoker.setCommand(post);
 		res.setResponse(invoker.execute());
 		return res;
@@ -76,8 +72,8 @@ public class SocialController {
 	@ResponseBody
 	public Response read(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Response res = new Response();
-		Command read = commandFactory.getCommand( 
-				CommandType.READ , sender, target);
+		Command read = commandFactory.getCommand(CommandType.READ, Optional.of(sender).orElse("").trim(),
+				Optional.of(target).orElse("").trim());
 		invoker.setCommand(read);
 		res.setResponse(invoker.execute());
 		return res;
@@ -88,8 +84,7 @@ public class SocialController {
 	@ResponseBody
 	public Response follow(@RequestBody Command command) {
 		Response res = new Response();
-		Command follow = commandFactory.getCommand( 
-				CommandType.FOLLOW , command.getSender(), command.getTarget());
+		Command follow = commandFactory.getCommand(CommandType.FOLLOW, command.getSender(), command.getTarget());
 		invoker.setCommand(follow);
 		res.setResponse(invoker.execute());
 		return res;
@@ -101,25 +96,21 @@ public class SocialController {
 	@ResponseBody
 	public Response wall(@RequestParam("sender") String sender, @RequestParam("target") String target) {
 		Response res = new Response();
-		Command wall = commandFactory.getCommand( 
-				CommandType.WALL , sender, null);
+		Command wall = commandFactory.getCommand(CommandType.WALL, sender, null);
 		invoker.setCommand(wall);
 		res.setResponse(invoker.execute());
 		return res;
 	}
-	
+
 	@CrossOrigin
 	@GetMapping(value = "/allUsers")
 	@ResponseBody
 	public Response getAllUsers() {
 		Response res = new Response();
-		Command getAllUsers = commandFactory.getCommand( 
-				CommandType.GETALL, null, null);
+		Command getAllUsers = commandFactory.getCommand(CommandType.GETALL, null, null);
 		invoker.setCommand(getAllUsers);
 		res.setResponse(invoker.execute());
 		return res;
 	}
-	
-	
 
 }
