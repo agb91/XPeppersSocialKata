@@ -6,8 +6,12 @@
       <input type="submit" value="Show me the wall!" (click)="onSubmit()">
     </form>
 
-    <div>
-      {{response}}
+    <div class="littlePadding">
+      <li *ngFor="let r of responseList">
+        <p>
+          {{r}}
+        </p>
+      </li>
     </div>
 
     <div>

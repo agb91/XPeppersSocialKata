@@ -26,6 +26,8 @@ export class PostComponent implements OnInit {
     let com:Command = new Command(this.sender, this.target);
     this.ajax.callPost(com).subscribe( r => this.response = r.response );
 
+    this.target = ""; //clean the input text
+
   }
 
 }

@@ -16,7 +16,7 @@ export class FollowComponent implements OnInit {
   constructor(private ajax:AjaxService) { }
 
   ngOnInit() {
-    this.sender = localStorage.getItem("name");
+    this.sender = localStorage.getItem("user");
   }
 
   //useless class just to test the testing system..

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AjaxService } from '../ajax.service';
+import { FormatterService } from '../formatter.service';
 
 @Component({
   selector: 'app-wall',
@@ -9,18 +10,21 @@ import { AjaxService } from '../ajax.service';
 export class WallComponent implements OnInit {
 
   sender:string;
-  response:string;
+  responseList:string[];
 
-  constructor(private ajax:AjaxService) { }
+  constructor(private ajax:AjaxService, private formatter:FormatterService) { }
 
   ngOnInit() {
-    this.sender = localStorage.getItem("name");
+    this.sender = localStorage.getItem("user");
   }
   
   onSubmit()
   {
     console.log( "wall: " + this.sender + "--->");
-    this.ajax.callWall(this.sender, this.sender).subscribe( r => this.response = r.response );
+    this.ajax.callWall(this.sender, this.sender).subscribe( r => this.responseList 
+      = this.formatter.formatWall(r.response) );
 
   }
+
+
 }
